@@ -11,7 +11,7 @@ abstract class Job implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 9;
+    public int $tries = 1;
 
     /**
      * Calculate the number of seconds to wait before retrying the job.
@@ -21,5 +21,13 @@ abstract class Job implements ShouldQueue
     public function backoff(): array
     {
         return [1, 1, 5, 1, 1, 5, 1, 1];
+    }
+
+    public static function execute(...$constructorParams)
+    {
+        $job = new static(...$constructorParams);
+        // $job->job = $job;
+
+        return $job->handle();
     }
 }

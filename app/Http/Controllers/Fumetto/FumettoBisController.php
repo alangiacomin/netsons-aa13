@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Fumetto\StoreFumettoRequest;
 use App\Http\Requests\Fumetto\UpdateFumettoRequest;
 use App\Jobs\Fumetto\CreaFumetto;
+use App\Jobs\Fumetto\CreaFumettoRandom;
 use App\Models\Fumetto;
+use Symfony\Component\HttpFoundation\Response;
 
 class FumettoBisController extends Controller
 {
@@ -16,8 +18,9 @@ class FumettoBisController extends Controller
     public function index()
     {
         //
-        CreaFumetto::dispatch();
+        // CreaFumettoRandom::dispatch();
 
+        return view('home');
     }
 
     /**
@@ -26,6 +29,9 @@ class FumettoBisController extends Controller
     public function store(StoreFumettoRequest $request)
     {
         //
+        $ret = CreaFumetto::execute($request->validated());
+
+        return response()->json($ret, Response::HTTP_CREATED);
     }
 
     /**
@@ -42,6 +48,8 @@ class FumettoBisController extends Controller
     public function update(UpdateFumettoRequest $request, Fumetto $fumetto)
     {
         //
+        // return response()->json($fumetto, Response::HTTP_OK);
+        CreaFumettoRandom::execute($fumetto);
     }
 
     /**

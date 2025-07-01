@@ -11,7 +11,7 @@ class StoreFumettoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreFumettoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'Titolo' => 'required|max:255',
+            'Numero' => 'required',
         ];
     }
 }
