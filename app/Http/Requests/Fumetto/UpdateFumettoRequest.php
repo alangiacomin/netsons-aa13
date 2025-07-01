@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Fumetto;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateFumettoRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateFumettoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
