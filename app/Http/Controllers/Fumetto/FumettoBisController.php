@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FumettoBisController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Fumetto::class, 'fumetto');
+    }
+
     /**
      * Display a listing of the resource.
      */
