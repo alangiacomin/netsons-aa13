@@ -40,6 +40,7 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "./resources/js"
+    "./resources/js",
+    "scss.d.ts"
   ]
 }
