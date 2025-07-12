@@ -14,7 +14,7 @@ class FumettoBisController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Fumetto::class, 'fumetto');
+        // $this->authorizeResource(Fumetto::class, 'fumetto');
     }
 
     /**
@@ -34,7 +34,7 @@ class FumettoBisController extends Controller
     public function store(StoreFumettoRequest $request)
     {
         //
-        $ret = CreaFumetto::execute($request->validated());
+        $ret = CreaFumetto::dispatch($request->validated());
 
         return response()->json($ret, Response::HTTP_CREATED);
     }
