@@ -1,27 +1,24 @@
-import {ReactNode} from "react";
+import {lazy} from "react";
+import {RouteObject} from "react-router-dom";
+
 import Layout from "./Layout.tsx";
-import FunzioniVarie from "./FunzioniVarie/FunzioniVarie.tsx";
-import Login from "./Login/Login.tsx";
 
+const Fumetti = lazy(() => import("./Fumetti/Fumetti"));
+const FunzioniVarie = lazy(() => import("./FunzioniVarie/FunzioniVarie"));
+const Login = lazy(() => import("./Login/Login"));
 
-const paths: { path: string, element: ReactNode, children: { path: string, element: ReactNode }[] } = {
-    path: "/",
-    element: <Layout/>,
-    children: [
-        {
-            path: "",
-            element: <FunzioniVarie/>,
-        },
-        {
-            path: "login",
-            element: <Login/>,
-        },
-        {
-            path: "*",
-            element: <div>404</div>,
-        },
-    ],
-};
+const paths: RouteObject[] = [
+    {
+        path: "/",
+        element: <Layout/>,
+        children: [
+            {index: true, element: <FunzioniVarie/>},
+            {path: "login", element: <Login/>},
+            {path: "fumetti", element: <Fumetti/>},
+            {path: "*", element: <div>404</div>},
+        ],
+    }
+];
 
 export {
     paths

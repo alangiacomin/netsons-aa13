@@ -15,14 +15,17 @@ const Navbar = (): ReactNode => {
     }
 
     const navConfig = {
-        home:
-            {
-                path: "/",
-                label: "Home",
-            },
+        home: {
+            path: "/",
+            label: "Home",
+        },
         login: {
             path: "/login",
             label: "Login",
+        },
+        fumetti: {
+            path: "/fumetti",
+            label: "Fumetti",
         }
     };
 

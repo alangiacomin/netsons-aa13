@@ -10,6 +10,9 @@ use App\Jobs\Fumetto\CreaFumettoRandom;
 use App\Models\Fumetto;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Fumetto
+ */
 class FumettoBisController extends Controller
 {
     public function __construct()
@@ -18,6 +21,8 @@ class FumettoBisController extends Controller
     }
 
     /**
+     * List
+     *
      * Display a listing of the resource.
      */
     public function index()
@@ -25,11 +30,17 @@ class FumettoBisController extends Controller
         //
         // CreaFumettoRandom::dispatch();
 
+        return response()->json(Fumetto::all(), Response::HTTP_OK);
+
         return view('home');
     }
 
     /**
+     * Store
+     *
      * Store a newly created resource in storage.
+     *
+     * @param  StoreFumettoRequest  $request  dati da salvere
      */
     public function store(StoreFumettoRequest $request)
     {
@@ -40,7 +51,11 @@ class FumettoBisController extends Controller
     }
 
     /**
+     * Show
+     *
      * Display the specified resource.
+     *
+     * @param  Fumetto  $fumetto  ID Del fumetto
      */
     public function show(Fumetto $fumetto)
     {
@@ -48,6 +63,8 @@ class FumettoBisController extends Controller
     }
 
     /**
+     * Update
+     *
      * Update the specified resource in storage.
      */
     public function update(UpdateFumettoRequest $request, Fumetto $fumetto)
@@ -58,6 +75,8 @@ class FumettoBisController extends Controller
     }
 
     /**
+     * Remove
+     *
      * Remove the specified resource from storage.
      */
     public function destroy(Fumetto $fumetto)

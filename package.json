@@ -3,7 +3,10 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "spec:gen": "php artisan scribe:generate",
+    "client:gen": "bunx openapi-typescript-codegen --input .openapi/openapi.yaml --output resources/js/api --postfixServices Api",
+    "openapi:gen": "bun run spec:gen && bun run client:gen"
   },
   "devDependencies": {
     "@eslint/compat": "^1.3.1",
@@ -19,6 +22,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "laravel-vite-plugin": "^1.3.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "sass": "^1.89.2",
     "terser": "^5.43.1",
     "typescript": "^5.8.3",
