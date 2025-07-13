@@ -90,10 +90,10 @@ const Navbar = (): ReactNode => {
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a className="button is-primary">
+                                <a className="button">
                                     <strong>Sign up</strong>
                                 </a>
-                                <a className="button" onClick={() => {
+                                <a className="button is-primary" onClick={() => {
                                     goToPage(navConfig.login.path)
                                 }}>
                                     Log in

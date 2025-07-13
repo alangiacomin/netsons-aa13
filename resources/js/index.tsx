@@ -1,6 +1,7 @@
 import {createRoot, Root} from 'react-dom/client';
-// import Bootstrap from "./Bootstrap";
 import App from "./App.tsx";
+import './bootstrap';
+
 
 const container: HTMLElement | null = document.getElementById('app');
 
