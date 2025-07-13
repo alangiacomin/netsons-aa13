@@ -1,8 +1,10 @@
 import {Outlet} from "react-router-dom";
 import {ReactNode} from "react";
 import Navbar from "./Navbar.tsx";
+import {useAuth} from "../../MainProvider.tsx";
 
 const Layout = (): ReactNode => {
+    const {user} = useAuth();
     return (<>
         <section className="hero is-small">
             <div className={"container"}>
@@ -32,6 +34,7 @@ const Layout = (): ReactNode => {
                         The website content is
                         licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//">CC BY NC SA 4.0</a>.
                     </p>
+                    {user && (<p>User: {user.name}</p>)}
                 </div>
             </div>
         </footer>

@@ -1,18 +1,24 @@
-import {ChangeEvent, FormEvent, ReactNode, useState} from "react";
+import {ChangeEvent, FC, FormEvent, ReactNode, useState} from "react";
 import Section from "../../../components/Section";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {UserApi} from "../../../api";
 import classNames from "classnames";
 import FieldError from "./FieldError";
+import {useAuth} from "../../../MainProvider.tsx";
+import {pathMap} from "../paths.tsx";
 
 type ErrorsType = {
     email?: string[],
     password?: string[]
 }
 
-const Login = (): ReactNode => {
+interface Props {
+    redirectTo: string;
+}
+
+const Login: FC<Props> = ({redirectTo}): ReactNode => {
     // Stato locale per gestire i dati dell’utente
     const [credenziali, setCredenziali] = useState({
         email: 'admin@example.com',
@@ -20,6 +26,12 @@ const Login = (): ReactNode => {
     });
     const [errors, setErrors] = useState<ErrorsType | null>(null);
     const [isFetching, setIsFetching] = useState(false);
+    const {user, setUser} = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: pathMap.root.path};
+    console.log('from:', from);
+
 
     // Gestore generico per ambedue i campi
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,16 +42,15 @@ const Login = (): ReactNode => {
     // Qui potresti chiamare la tua API di autenticazione
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        console.log('Invio credenziali:', credenziali);
         setErrors(null);
         setIsFetching(true);
         UserApi.login(credenziali)
             .then((res: any) => {
-                console.log(res);
+                setUser(res);
+                navigate(from, {replace: true});
+
             })
             .catch((err: any) => {
-                console.log(err.body.errors);
                 setErrors(err.body.errors);
             })
             .finally(() => {
@@ -97,7 +108,8 @@ const Login = (): ReactNode => {
                     {/* Pulsante submit */}
                     <div className="field">
                         <button
-                            className={classNames(["button", "is-primary", "is-fullwidth", {"is-loading": isFetching}])}>
+                            className={classNames(["button", "is-primary", "is-fullwidth", {"is-loading": isFetching}])}
+                            disabled={!!user}>
                             Entra
                         </button>
                     </div>
@@ -110,18 +122,6 @@ const Login = (): ReactNode => {
                         </Link>
                     </p>
                 </form>
-
-                {/* Pulsante logout */}
-                <div className="field">
-                    <button
-                        className={classNames(["button"])}
-                        onClick={() => {
-                            UserApi.logout()
-                        }}
-                    >
-                        Logout
-                    </button>
-                </div>
             </div>
         </Section>);
 };

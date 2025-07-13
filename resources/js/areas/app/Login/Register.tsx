@@ -47,7 +47,6 @@ const Register = (): ReactNode => {
             <div className="login">
                 <form
                     className="box"
-                    style={{maxWidth: 420, margin: 'auto'}}
                     onSubmit={onSubmit}
                 >
                     <h1 className="title is-4 has-text-centered">Crea un account</h1>
@@ -69,8 +68,8 @@ const Register = (): ReactNode => {
                                 required
                             />
                             <span className="icon is-small is-left">
-                <FontAwesomeIcon icon={faUser}/>
-              </span>
+                                <FontAwesomeIcon icon={faUser}/>
+                              </span>
                         </div>
                     </div>
 

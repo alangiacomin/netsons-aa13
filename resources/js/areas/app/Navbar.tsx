@@ -1,9 +1,12 @@
 import {ReactNode, useState} from "react";
 import {useMatch, useNavigate} from "react-router-dom";
+import {pathMap} from "./paths.tsx";
+import {useAuth} from "../../MainProvider.tsx";
 
 const Navbar = (): ReactNode => {
     const navigate = useNavigate();
     const [isBurgerOpen, setisBurgerOpen] = useState(false);
+    const {user} = useAuth();
     const toggleBurger = () => {
         setisBurgerOpen(!isBurgerOpen);
     };
@@ -18,10 +21,6 @@ const Navbar = (): ReactNode => {
         home: {
             path: "/",
             label: "Home",
-        },
-        login: {
-            path: "/login",
-            label: "Login",
         },
         fumetti: {
             path: "/fumetti",
@@ -62,42 +61,33 @@ const Navbar = (): ReactNode => {
                                     {n.label}
                                 </a>);
                         })}
-
-
-                        {/*<div className="navbar-item has-dropdown is-hoverable">*/}
-                        {/*    <a className="navbar-link">*/}
-                        {/*        More*/}
-                        {/*    </a>*/}
-
-                        {/*    <div className="navbar-dropdown">*/}
-                        {/*        <a className="navbar-item">*/}
-                        {/*            About*/}
-                        {/*        </a>*/}
-                        {/*        <a className="navbar-item is-selected">*/}
-                        {/*            Jobs*/}
-                        {/*        </a>*/}
-                        {/*        <a className="navbar-item">*/}
-                        {/*            Contact*/}
-                        {/*        </a>*/}
-                        {/*        <hr className="navbar-divider"/>*/}
-                        {/*        <a className="navbar-item">*/}
-                        {/*            Report an issue*/}
-                        {/*        </a>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                     </div>
 
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a className="button">
-                                    <strong>Sign up</strong>
-                                </a>
-                                <a className="button is-primary" onClick={() => {
-                                    goToPage(navConfig.login.path)
-                                }}>
-                                    Log in
-                                </a>
+                                {user && (
+                                    <button
+                                        className="button" onClick={() => {
+                                        goToPage(pathMap.logout.path)
+                                    }}>
+                                        Logout
+                                    </button>)}
+                                {!user && (
+                                    <>
+                                        <button
+                                            className="button" onClick={() => {
+                                            goToPage(pathMap.register.path)
+                                        }}>
+                                            Register
+                                        </button>
+                                        <button
+                                            className="button is-primary" onClick={() => {
+                                            goToPage(pathMap.login.path)
+                                        }}>
+                                            Login
+                                        </button>
+                                    </>)}
                             </div>
                         </div>
                     </div>

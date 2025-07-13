@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import MainContext from "./MainContext";
+import MainProvider from "./MainProvider.tsx";
 import Router from "./Router.tsx";
 import axios from "axios";
 
@@ -7,9 +7,8 @@ const App = () => {
     const [ready, setReady] = useState<boolean>(false);
 
     const csrf = async () => {
-        await axios.get('/sanctum/csrf-cookie');   // <-- basta una volta per tab
+        await axios.get('/sanctum/csrf-cookie');
     }
-
     useEffect(() => {
         csrf().then(() => {
             setReady(true);
@@ -17,9 +16,9 @@ const App = () => {
     }, []);
 
     return ready && (
-        <MainContext.Provider value={{}}>
+        <MainProvider>
             <Router/>
-        </MainContext.Provider>
+        </MainProvider>
     );
 }
 

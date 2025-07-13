@@ -1,19 +1,48 @@
-import {ReactNode, useEffect} from "react";
+import {FC, ReactNode, useEffect} from "react";
 import Section from "../../../components/Section.tsx";
 import {FumettoApi} from "../../../api";
+import {useAuth} from "../../../MainProvider.tsx";
+import {useLocation} from "react-router-dom";
+import Login from "../Login/Login.tsx";
 
-const Fumetti = (): ReactNode => {
+
+interface Props {
+    children: ReactNode;          // ciò che vuoi proteggere (es. <Fumetti />)
+}
+
+const RequireAuthInline: FC<Props> = ({children}) => {
+    const {user} = useAuth();
+    const location = useLocation();
+
+    if (!user) {
+        // Non loggato: mostro direttamente il login,
+        // passando il path corrente per il redirect post-login
+        return <Login redirectTo={location.pathname}/>;
+    }
+
+    // Loggato: mostro il contenuto protetto
+    return <>{children}</>;
+}
+
+
+const Fumetti2 = (): ReactNode => {
 
     useEffect(() => {
         FumettoApi.list().then((res: any) => {
             console.log(res);
         });
-    })
+    }, []);
 
     return (
         <Section title={"titolo fumetti"} subtitle={"sottotitolo fumetti"}>
             Corpo dei fumetti
         </Section>);
+};
+
+const Fumetti = () => {
+    return (<RequireAuthInline>
+        <Fumetti2/>
+    </RequireAuthInline>);
 };
 
 export default Fumetti;
