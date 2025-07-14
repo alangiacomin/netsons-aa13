@@ -3,3 +3,39 @@
   justify-content: center;
   display: flex;
 }
+
+
+.splashscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/*
+.navbar-item {
+  color: white;
+
+  &.is-active {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+ */
+
+:root {
+}
+
+
+:root {
+  //--bulma-link-h: 233;
+  //--bulma-link-s: 100%;
+  //--bulma-link-on-scheme-l: 63%;
+  //--bulma-link-text: hsl(var(--bulma-link-h), var(--bulma-link-s), var(--bulma-link-on-scheme-l))
+}
+
+
+//.footer a {
+//  color: blueviolet !important;
+//}

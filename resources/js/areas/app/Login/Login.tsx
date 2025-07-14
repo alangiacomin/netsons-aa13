@@ -7,18 +7,18 @@ import {UserApi} from "../../../api";
 import classNames from "classnames";
 import FieldError from "./FieldError";
 import {useAuth} from "../../../MainProvider.tsx";
-import {pathMap} from "../paths.tsx";
+import {routes} from "../routes.tsx";
 
 type ErrorsType = {
     email?: string[],
     password?: string[]
 }
 
-interface Props {
-    redirectTo: string;
+interface LoginProps {
+    redirectTo?: string;
 }
 
-const Login: FC<Props> = ({redirectTo}): ReactNode => {
+const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
     // Stato locale per gestire i dati dell’utente
     const [credenziali, setCredenziali] = useState({
         email: 'admin@example.com',
@@ -29,7 +29,7 @@ const Login: FC<Props> = ({redirectTo}): ReactNode => {
     const {user, setUser} = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: pathMap.root.path};
+    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: routes.root.path};
     console.log('from:', from);
 
 

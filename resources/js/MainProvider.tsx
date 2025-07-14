@@ -1,40 +1,73 @@
 import {createContext, FC, ReactNode, useContext, useEffect, useState} from 'react';
+import {UserApi} from "./api";
+import axios from 'axios';
 
 export interface IUser {
     id: string;
     email: string;
     name: string;
-    token: string;          // se ti torna un JWT o simile
 }
 
-interface IAuthContext {
+interface IMainContext {
+    loading: boolean;
     user: IUser | null;
     setUser: (u: IUser | null) => void;
-    //login: (u: IUser) => void;
-    //logout: () => void;
-    loading: boolean;       // utile se devi aspettare il refresh di un token
 }
 
-const MainContext = createContext<IAuthContext | undefined>(undefined);
+const MainContext = createContext<IMainContext | undefined>(undefined);
 
-interface Props {
-    children: ReactNode;          // ciò che vuoi proteggere (es. <Fumetti />)
+type ProviderProps = {
+    children: ReactNode;
 }
 
-const MainProvider: FC<Props> = ({children}) => {
+const SplashScreen = () => {
+    return (<div className={"splashscreen"}>... sto caricando il sito...</div>);
+}
+
+const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode => {
     const [user, setUser] = useState<IUser | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    // On mount: prova a recuperare l’utente dal localStorage (persistenza semplice)
+    const csrf = async () => {
+        await axios.get('/sanctum/csrf-cookie');
+    }
+
+    // Recupero tutte le info dallo storage, utili per avere l'app "pronta" appena arriva l'utente
+    // Questo è comodo se BE non risponde, così sfrutta le info offline
+    // Al momento c'è solo lo user, ma in futuro si può aumentare
     useEffect(() => {
-        const raw = localStorage.getItem('auth_user');
-        if (raw) {
-            setUser(JSON.parse(raw) as IUser);
+        const userCached = localStorage.getItem('auth_user');
+        if (userCached) {
+            setUser(JSON.parse(userCached) as IUser);
         }
-        setLoading(false);
     }, []);
 
-    // Salva in localStorage ad ogni variazione
+    const appPronta = () => {
+
+        //setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 0);
+    };
+
+    // Aggiornamento tramite BE dell'utente veramente connesso
+    useEffect(() => {
+        csrf()
+            .then(() => {
+                UserApi.get()
+                    .then((res: any) => {
+                        setUser(res as IUser);
+                    })
+                    .finally(() => {
+                        appPronta();
+                    })
+            })
+            .catch(() => {
+                appPronta();
+            });
+    }, []);
+
+    // Salva in localStorage le info aggiornate
     useEffect(() => {
         if (user) {
             localStorage.setItem('auth_user', JSON.stringify(user));
@@ -47,13 +80,9 @@ const MainProvider: FC<Props> = ({children}) => {
         console.log('provider user:', user);
     }, [user]);
 
-    /* funzioni esposte */
-    // const login = (u: IUser) => setUser(u);
-    // const logout = () => setUser(null);
-
     return (
         <MainContext.Provider value={{user, setUser, loading}}>
-            {children}
+            {loading ? <SplashScreen/> : children}
         </MainContext.Provider>
     );
 };

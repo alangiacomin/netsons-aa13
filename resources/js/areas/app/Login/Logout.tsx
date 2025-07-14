@@ -3,7 +3,7 @@ import {useAuth} from "../../../MainProvider.tsx";
 import {useNavigate} from "react-router-dom";
 import './Logout.scss';
 import {UserApi} from "../../../api";
-import {pathMap} from "../paths.tsx";
+import {routes} from "../routes.tsx";
 
 const Logout = (): ReactNode => {
 
@@ -11,7 +11,7 @@ const Logout = (): ReactNode => {
     const navigate = useNavigate();
 
     const redirectToHome = useCallback(() => {
-        navigate(pathMap.root.path, {replace: true});
+        navigate(routes.root.path, {replace: true});
     }, []);
 
     useEffect(() => {

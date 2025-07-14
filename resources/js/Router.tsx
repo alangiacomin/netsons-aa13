@@ -1,8 +1,8 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {paths as appPaths} from "./areas/app/paths";
+import {routerRoutes as appRoutes} from "./areas/app/routes.tsx";
 import {ReactNode} from "react";
 
-const br = createBrowserRouter(appPaths);
+const br = createBrowserRouter(appRoutes);
 
 const Router = (): ReactNode => (<RouterProvider router={br}/>);
 

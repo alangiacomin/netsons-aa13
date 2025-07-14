@@ -9,8 +9,7 @@ const Fumetti = lazy(() => import("./Fumetti/Fumetti"));
 const FunzioniVarie = lazy(() => import("./FunzioniVarie/FunzioniVarie"));
 const Login = lazy(() => import("./Login/Login"));
 
-
-const paths: RouteObject[] = [
+const routerRoutes: RouteObject[] = [
     {
         id: "root",
         path: "/",
@@ -26,32 +25,26 @@ const paths: RouteObject[] = [
     }
 ];
 
-export {
-    paths
-};
-
-
-// Struttura finale: { index: { path: "/" }, login: { path: "/login" }, … }
-export interface PathInfo {
+type RouteInfo = {
     path: string;
 }
 
-export type PathMap = Record<string, PathInfo>;
+type RouteMap = Record<string, RouteInfo>;
 
 /**
  * Crea la mappa dei path a partire dai RouteObject.
  * @param routes  array dei route (lo stesso che passi a <RouterProvider>)
  * @param base    path accumulato dai parent (default: "")
  */
-export function buildPathMap(
+const buildRouteMap = (
     routes: RouteObject[],
     base = ""
-): PathMap {
-    return routes.reduce<PathMap>((acc, route) => {
+): RouteMap => {
+    return routes.reduce<RouteMap>((acc, route) => {
         // calcola il path “assoluto” di questo nodo
         const current = route.index
-            ? base || "/"                                         // <Route index>
-            : route.path === "*"                                  // wildcard 404
+            ? base || "/"
+            : route.path === "*"
                 ? `${base}*`
                 : `${base}${base && !base.endsWith("/") ? "/" : ""}${route.path ?? ""}`;
 
@@ -62,24 +55,16 @@ export function buildPathMap(
 
         // visita eventuali figli
         if (route.children?.length) {
-            Object.assign(acc, buildPathMap(route.children, current));
+            Object.assign(acc, buildRouteMap(route.children, current));
         }
 
         return acc;
     }, {});
 }
 
-export const pathMap = buildPathMap(paths);
+const routes: RouteMap = buildRouteMap(routerRoutes);
 
-/*
-pathMap ora vale:
-
-{
-  root:     { path: "/" },
-  index:    { path: "/" },
-  login:    { path: "/login" },
-  register: { path: "/register" },
-  fumetti:  { path: "/fumetti" },
-  fallback: { path: "/*" }
-}
-*/
+export {
+    routerRoutes,
+    routes,
+};

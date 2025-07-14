@@ -1,13 +1,12 @@
 import {useEffect, useState} from "react";
 import MainProvider from "./MainProvider.tsx";
 import Router from "./Router.tsx";
-import axios from "axios";
 
 const App = () => {
     const [ready, setReady] = useState<boolean>(false);
 
     const csrf = async () => {
-        await axios.get('/sanctum/csrf-cookie');
+        // await axios.get('/sanctum/csrf-cookie');
     }
     useEffect(() => {
         csrf().then(() => {

@@ -1,14 +1,14 @@
 import {ReactNode, useState} from "react";
-import {useMatch, useNavigate} from "react-router-dom";
-import {pathMap} from "./paths.tsx";
+import {Link, useMatch, useNavigate} from "react-router-dom";
+import {routes} from "./routes.tsx";
 import {useAuth} from "../../MainProvider.tsx";
 
 const Navbar = (): ReactNode => {
     const navigate = useNavigate();
-    const [isBurgerOpen, setisBurgerOpen] = useState(false);
+    const [isBurgerOpen, setIsBurgerOpen] = useState(false);
     const {user} = useAuth();
     const toggleBurger = () => {
-        setisBurgerOpen(!isBurgerOpen);
+        setIsBurgerOpen(!isBurgerOpen);
     };
     const goToPage = (page: string) => {
         if (isBurgerOpen) {
@@ -55,11 +55,12 @@ const Navbar = (): ReactNode => {
                         {Object.entries(navConfig).map(([key, n]) => {
                             const isActive = useMatch(n.path);
                             return (
-                                <a key={key} className={`navbar-item ${isActive ? 'is-active' : ''}`} onClick={() => {
-                                    goToPage(n.path)
-                                }}>
+                                <Link
+                                    key={key}
+                                    className={`navbar-item ${isActive ? 'is-active' : ''}`}
+                                    to={n.path}>
                                     {n.label}
-                                </a>);
+                                </Link>);
                         })}
                     </div>
 
@@ -69,7 +70,7 @@ const Navbar = (): ReactNode => {
                                 {user && (
                                     <button
                                         className="button" onClick={() => {
-                                        goToPage(pathMap.logout.path)
+                                        goToPage(routes.logout.path)
                                     }}>
                                         Logout
                                     </button>)}
@@ -77,13 +78,13 @@ const Navbar = (): ReactNode => {
                                     <>
                                         <button
                                             className="button" onClick={() => {
-                                            goToPage(pathMap.register.path)
+                                            goToPage(routes.register.path)
                                         }}>
                                             Register
                                         </button>
                                         <button
                                             className="button is-primary" onClick={() => {
-                                            goToPage(pathMap.login.path)
+                                            goToPage(routes.login.path)
                                         }}>
                                             Login
                                         </button>

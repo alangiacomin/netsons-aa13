@@ -1,5 +1,4 @@
-import {ReactNode} from "react";
-
+import {FC, ReactNode} from "react";
 
 interface SectionProps {
     title: string;
@@ -8,8 +7,7 @@ interface SectionProps {
     className?: string;
 }
 
-
-const Section = ({title, subtitle, children}: SectionProps): ReactNode => {
+const Section: FC<SectionProps> = ({title, subtitle, children}: SectionProps): ReactNode => {
     return (
         <>
             <h1 className="title">{title}</h1>

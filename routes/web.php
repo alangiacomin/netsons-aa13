@@ -12,6 +12,7 @@ Route::prefix('api')->group(function () {
     );
 
     Route::prefix('user')->name('user.')->group(function () {
+        Route::post('get', [UserController::class, 'get'])->name('get'); // ->middleware('guest');
         Route::post('login', [UserController::class, 'login'])->name('login'); // ->middleware('guest');
         Route::post('loginFake', [UserController::class, 'loginFake'])->name('login')->middleware('guest');
         Route::post('logout', [UserController::class, 'logout'])->name('logout')->middleware('auth');

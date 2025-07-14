@@ -7,6 +7,18 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserApi {
     /**
+     * Get
+     * Restituisce l'utente loggato
+     * @returns void
+     * @throws ApiError
+     */
+    public static get(): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/get',
+        });
+    }
+    /**
      * Login
      * Gestisce il tentativo di login.
      * @param requestBody
