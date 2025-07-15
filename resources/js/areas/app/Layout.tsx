@@ -1,44 +1,34 @@
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import {ReactNode} from "react";
 import Navbar from "./Navbar.tsx";
 import {useAuth} from "../../MainProvider.tsx";
 
-const Layout = (): ReactNode => {
+const DebugData = () => {
+    const isDebug = true;
     const {user} = useAuth();
-    return (<>
-        <section className="hero is-small">
-            <div className={"container"}>
-                <div className="hero-body">
-                    <p className="title">Hero title</p>
-                    <p className="subtitle">Hero subtitle</p>
-                </div>
-            </div>
-        </section>
-        <section className="section">
-            <div className={"container"}>
-                <Navbar/>
-            </div>
-        </section>
-        <section className="section">
-            <div className={"container"}>
+    const location = useLocation();
+
+    return isDebug && (
+        <div className={"debug-data"}>
+            <p>User: {user?.name}</p>
+            <p>Location: {location.pathname}</p>
+        </div>
+    );
+}
+
+const Layout = (): ReactNode => {
+    return (
+        <div className="container">
+            <Navbar/>
+            <div className={"container-fluid"}>
                 <Outlet/>
             </div>
-        </section>
-        <footer className="footer">
-            <div className={"container"}>
-                <div className="content has-text-centered">
-                    <p>
-                        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
-                        The source code is
-                        licensed <a href="https://opensource.org/license/mit">MIT</a>.
-                        The website content is
-                        licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//">CC BY NC SA 4.0</a>.
-                    </p>
-                    {user && (<p>User: {user.name}</p>)}
-                </div>
-            </div>
-        </footer>
-    </>);
+            <footer className="py-3 my-4 border-top">
+                <p className="text-center text-body-secondary">© 2025 Company, Inc</p>
+            </footer>
+            <DebugData/>
+        </div>
+    );
 }
 
 export default Layout;

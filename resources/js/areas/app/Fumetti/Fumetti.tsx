@@ -1,5 +1,4 @@
 import {FC, ReactNode, useEffect} from "react";
-import Section from "../../../components/Section.tsx";
 import {FumettoApi} from "../../../api";
 import {useAuth} from "../../../MainProvider.tsx";
 import {useLocation} from "react-router-dom";
@@ -34,9 +33,9 @@ const Fumetti2 = (): ReactNode => {
     }, []);
 
     return (
-        <Section title={"titolo fumetti"} subtitle={"sottotitolo fumetti"}>
+        <div className={"container"}>
             Corpo dei fumetti
-        </Section>);
+        </div>);
 };
 
 const Fumetti = () => {

@@ -7,10 +7,19 @@ axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 axios.interceptors.request.use(config => {
-  const token = Cookies.get('XSRF-TOKEN');
+  let token = Cookies.get('XSRF-TOKEN');
+
+  if (!token) {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta) {
+      token = meta.getAttribute('content');
+    }
+  }
+
   if (token) {
     config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
   }
+
   return config;
 });
 

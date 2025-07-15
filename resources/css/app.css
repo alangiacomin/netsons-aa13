@@ -1,0 +1,35 @@
+.debug-data {
+    border: 1px dashed red;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+
+.splashscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/*
+.navbar-item {
+  color: white;
+
+  &.is-active {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+ */
+
+.nav-link.active {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

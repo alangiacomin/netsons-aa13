@@ -5,8 +5,8 @@ interface FieldErrorProps {
 }
 
 const FieldError: FC<FieldErrorProps> = ({errors}) =>
-    (<>
-        {errors?.map((e, i) => <div key={i} className={"is-size-7 has-text-warning"}>{e}</div>)}
-    </>);
+    (<div className={"small text-danger"}>
+        {errors?.map((e, i) => <div key={i}>{e}</div>)}
+    </div>);
 
 export default FieldError;

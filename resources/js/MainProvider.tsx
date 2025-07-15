@@ -1,6 +1,5 @@
 import {createContext, FC, ReactNode, useContext, useEffect, useState} from 'react';
 import {UserApi} from "./api";
-import axios from 'axios';
 
 export interface IUser {
     id: string;
@@ -28,10 +27,6 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
     const [user, setUser] = useState<IUser | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const csrf = async () => {
-        await axios.get('/sanctum/csrf-cookie');
-    }
-
     // Recupero tutte le info dallo storage, utili per avere l'app "pronta" appena arriva l'utente
     // Questo è comodo se BE non risponde, così sfrutta le info offline
     // Al momento c'è solo lo user, ma in futuro si può aumentare
@@ -43,26 +38,16 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
     }, []);
 
     const appPronta = () => {
-
-        //setLoading(false);
-        setTimeout(() => {
-            setLoading(false);
-        }, 0);
+        setLoading(false);
     };
 
     // Aggiornamento tramite BE dell'utente veramente connesso
     useEffect(() => {
-        csrf()
-            .then(() => {
-                UserApi.get()
-                    .then((res: any) => {
-                        setUser(res as IUser);
-                    })
-                    .finally(() => {
-                        appPronta();
-                    })
+        UserApi.get()
+            .then((res: any) => {
+                setUser(res as IUser);
             })
-            .catch(() => {
+            .finally(() => {
                 appPronta();
             });
     }, []);
@@ -74,10 +59,6 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
         } else {
             localStorage.removeItem('auth_user');
         }
-    }, [user]);
-
-    useEffect(() => {
-        console.log('provider user:', user);
     }, [user]);
 
     return (

@@ -3,7 +3,7 @@
 
 import {ReactNode, useState} from 'react';
 import Section from '../../../components/Section.tsx';
-import './Login.scss'; // ri-usa lo stesso SCSS del login
+import './Login.css'; // ri-usa lo stesso SCSS del login
 import {Link} from 'react-router-dom';
 import {faEnvelope, faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

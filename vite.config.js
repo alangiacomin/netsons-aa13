@@ -7,21 +7,21 @@ export default defineConfig({
     react(),
     laravel({
       input: [
-        'resources/css/vendor.scss',
-        'resources/css/app.scss',
+        'resources/css/vendor.css',
+        'resources/css/app.css',
         'resources/js/index.tsx'
       ],
       refresh: true,
     }),
   ],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'legacy',
-        silenceDeprecations: ['legacy-js-api', 'color-functions', 'global-builtin', 'import'],
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       api: 'legacy',
+  //       silenceDeprecations: ['legacy-js-api', 'color-functions', 'global-builtin', 'import'],
+  //     },
+  //   },
+  // },
   build: {
     rollupOptions: {
       output: {
