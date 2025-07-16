@@ -8,7 +8,6 @@ export interface IUser {
 }
 
 interface IMainContext {
-    loading: boolean;
     user: IUser | null;
     setUser: (u: IUser | null) => void;
 }
@@ -19,53 +18,43 @@ type ProviderProps = {
     children: ReactNode;
 }
 
-const SplashScreen = () => {
-    return (<div className={"splashscreen"}>... sto caricando il sito...</div>);
-}
-
 const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode => {
     const [user, setUser] = useState<IUser | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
     // Recupero tutte le info dallo storage, utili per avere l'app "pronta" appena arriva l'utente
     // Questo è comodo se BE non risponde, così sfrutta le info offline
     // Al momento c'è solo lo user, ma in futuro si può aumentare
     useEffect(() => {
-        const userCached = localStorage.getItem('auth_user');
+        const userCached = sessionStorage.getItem('auth_user');
         if (userCached) {
             setUser(JSON.parse(userCached) as IUser);
         }
     }, []);
 
-    const appPronta = () => {
-        setLoading(false);
-    };
 
     // Aggiornamento tramite BE dell'utente veramente connesso
     useEffect(() => {
         UserApi.get()
             .then((res: any) => {
                 setUser(res as IUser);
-            })
-            .finally(() => {
-                appPronta();
             });
     }, []);
 
     // Salva in localStorage le info aggiornate
     useEffect(() => {
         if (user) {
-            localStorage.setItem('auth_user', JSON.stringify(user));
+            sessionStorage.setItem('auth_user', JSON.stringify(user));
         } else {
-            localStorage.removeItem('auth_user');
+            sessionStorage.removeItem('auth_user');
         }
     }, [user]);
 
     return (
-        <MainContext.Provider value={{user, setUser, loading}}>
-            {loading ? <SplashScreen/> : children}
+        <MainContext.Provider value={{user, setUser}}>
+            {children}
         </MainContext.Provider>
     );
+
 };
 
 export const useAuth = () => {
