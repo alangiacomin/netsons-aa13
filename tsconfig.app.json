@@ -41,6 +41,6 @@
   },
   "include": [
     "./resources/js",
-    "scss.d.ts"
+    "global.d.ts"
   ]
 }

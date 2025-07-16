@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {OpenAPI} from "./api/index.js";
 
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
@@ -32,3 +33,5 @@ axios.interceptors.response.use(null, async error => {
   }
   return Promise.reject(error);
 });
+
+OpenAPI.BASE = import.meta.env.VITE_BASE_URL || 'http://localhost:8000';
