@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import {ReactNode} from "react";
-import Navbar from "./Navbar.tsx";
+import Navbar from "../../components/Navbar/Navbar.tsx";
 
 
 const Layout = (): ReactNode => {
