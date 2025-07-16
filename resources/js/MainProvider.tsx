@@ -19,6 +19,7 @@ type ProviderProps = {
 }
 
 const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode => {
+    const [ready, setReady] = useState<boolean>(false);
     const [user, setUser] = useState<IUser | null>(null);
 
     // Recupero tutte le info dallo storage, utili per avere l'app "pronta" appena arriva l'utente
@@ -29,6 +30,7 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
         if (userCached) {
             setUser(JSON.parse(userCached) as IUser);
         }
+        setReady(true);
     }, []);
 
 
@@ -51,11 +53,11 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
 
     return (
         <MainContext.Provider value={{user, setUser}}>
-            {children}
+            {ready && children}
         </MainContext.Provider>
     );
-
 };
+
 
 export const useAuth = () => {
     const ctx = useContext(MainContext);
