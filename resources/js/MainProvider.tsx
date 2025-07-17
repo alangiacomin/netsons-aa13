@@ -2,7 +2,7 @@ import {createContext, FC, ReactNode, useContext, useEffect, useState} from 'rea
 import {UserApi} from "./api";
 
 export interface IUser {
-    id: string;
+    id: number;
     email: string;
     name: string;
 }
@@ -36,7 +36,7 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
 
     // Aggiornamento tramite BE dell'utente veramente connesso
     useEffect(() => {
-        UserApi.get()
+        UserApi.authenticated()
             .then((res: any) => {
                 setUser(res as IUser);
             });

@@ -29,5 +29,14 @@ class DatabaseSeeder extends Seeder
                 // 'is_admin' => true, // se hai questo campo per distinguere admin
             ]
         );
+
+        User::updateOrCreate(
+            ['email' => 'test@example.com'], // email unica
+            [
+                'name' => 'Tester',
+                'password' => Hash::make('password123'), // scegli una password sicura
+                // 'is_admin' => true, // se hai questo campo per distinguere admin
+            ]
+        );
     }
 }

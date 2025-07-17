@@ -2,22 +2,43 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type {CancelablePromise} from '../core/CancelablePromise';
+import {OpenAPI} from '../core/OpenAPI';
+import {request as __request} from '../core/request';
+
 export class UserApi {
     /**
-     * Get
+     * Auth
      * Restituisce l'utente loggato
      * @returns void
      * @throws ApiError
      */
-    public static get(): CancelablePromise<void> {
+    public static authenticated(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/get',
+            url: '/api/user/authenticated',
         });
     }
+
+    /**
+     * Get
+     * Restituisce l'utente indicato
+     * @param userId The ID of the user.
+     * @returns void
+     * @throws ApiError
+     */
+    public static get(
+        userId: number,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user/get/{user_id}',
+            path: {
+                'user_id': userId,
+            },
+        });
+    }
+
     /**
      * Login
      * Gestisce il tentativo di login.
@@ -42,6 +63,7 @@ export class UserApi {
             mediaType: 'application/json',
         });
     }
+
     /**
      * @returns void
      * @throws ApiError
@@ -52,6 +74,7 @@ export class UserApi {
             url: '/api/user/loginFake',
         });
     }
+
     /**
      * Logout
      * @returns void

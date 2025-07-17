@@ -59,9 +59,19 @@ class UserController extends Controller
     /**
      * Get
      *
+     * Restituisce l'utente indicato
+     */
+    public function get(?User $user): ?User
+    {
+        return $user;
+    }
+
+    /**
+     * Auth
+     *
      * Restituisce l'utente loggato
      */
-    public function get(): ?User
+    public function authenticated(): ?User
     {
         return Auth::user();
     }

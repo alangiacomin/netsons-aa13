@@ -6,7 +6,7 @@ const DebugData = () => {
     const {user} = useAuth();
 
     useEffect(() => {
-        const cached = localStorage.getItem('debug') as boolean | null;
+        const cached = sessionStorage.getItem('debug') as boolean | null;
         if (cached) {
             setDebug(cached);
         }
@@ -14,10 +14,10 @@ const DebugData = () => {
 
     useEffect(() => {
         if (debug) {
-            localStorage.setItem('debug', JSON.stringify(debug));
+            sessionStorage.setItem('debug', JSON.stringify(true));
         } else {
             if (debug === false) {
-                localStorage.removeItem('debug');
+                sessionStorage.removeItem('debug');
             }
         }
     }, [debug]);

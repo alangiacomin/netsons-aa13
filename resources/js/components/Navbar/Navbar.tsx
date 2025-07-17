@@ -28,6 +28,20 @@ const Navbar = (): ReactNode => {
         }
     };
 
+    /**
+     * Rimpiazza i parametri dinamici nel path (es: /user/:id)
+     */
+    const buildPath = (template: string, params: Record<string, string | number>): string => {
+        return template.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => {
+            const value = params[key];
+            if (value === undefined) {
+                throw new Error(`Parametro mancante: ${key}`);
+            }
+            return String(value);
+        });
+    }
+
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
@@ -47,7 +61,10 @@ const Navbar = (): ReactNode => {
                             <span><FontAwesomeIcon icon={faUser}/> {user ? user.name : "User"} </span>)}>
                             {user && (
                                 <>
-                                    <NavbarDropdownItem to={"#"}>Azione</NavbarDropdownItem>
+                                    <NavbarDropdownItem
+                                        to={buildPath(routes.user.path, {id: user.id})}>User</NavbarDropdownItem>
+                                    <NavbarDropdownItem
+                                        to={buildPath(routes.user.path, {id: 2})}>User 2</NavbarDropdownItem>
                                     <NavbarDropdownItem to={"#"}>Seconda azione</NavbarDropdownItem>
                                     <NavbarDropdownDivider/>
                                     <NavbarDropdownItem to={routes.logout.path}>Logout</NavbarDropdownItem>

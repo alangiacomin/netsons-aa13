@@ -19,7 +19,6 @@ const NavbarDropdown: FC<NavbarDropdownProps> = ({label, children}: NavbarDropdo
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropRef.current && !dropRef.current.contains(event.target as Node)) {
-                console.log("chiudo fuori drop");
                 setIsDropOpen(false);
             }
         };
