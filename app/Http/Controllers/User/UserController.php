@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -63,15 +64,17 @@ class UserController extends Controller
      */
     public function get(?User $user): ?User
     {
+        Gate::authorize('view', $user);
+
         return $user;
     }
 
     /**
-     * Auth
+     * AuthUser
      *
      * Restituisce l'utente loggato
      */
-    public function authenticated(): ?User
+    public function authUser(): ?User
     {
         return Auth::user();
     }

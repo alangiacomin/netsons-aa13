@@ -1,4 +1,4 @@
-import {LoaderFunctionArgs, RouteObject} from "react-router-dom";
+import {RouteObject} from "react-router-dom";
 
 import Layout from "./Layout.tsx";
 import Register from "./Login/Register.tsx";
@@ -7,12 +7,6 @@ import User from "./User/User.tsx";
 import FunzioniVarie from "./FunzioniVarie/FunzioniVarie.tsx";
 import Login from "./Login/Login.tsx";
 import Fumetti from "./Fumetti/Fumetti.tsx";
-
-const userLoader = ({params}: LoaderFunctionArgs) => {
-    const {id} = params;
-    console.log("userLoader", id);
-    return Number(id);
-}
 
 const routerRoutes: RouteObject[] = [
     {
@@ -25,7 +19,7 @@ const routerRoutes: RouteObject[] = [
             {id: "logout", path: "logout", element: <Logout/>},
             {id: "register", path: "register", element: <Register/>},
             {id: "fumetti", path: "fumetti", element: <Fumetti/>},
-            {id: "user", path: "user/:id", element: <User/>, loader: userLoader},
+            {id: "user", path: "user", element: <User/>},
             {id: "fallback", path: "*", element: <div>404</div>},
         ],
     }

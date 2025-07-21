@@ -2,24 +2,22 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type {CancelablePromise} from '../core/CancelablePromise';
-import {OpenAPI} from '../core/OpenAPI';
-import {request as __request} from '../core/request';
-
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
 export class UserApi {
     /**
-     * Auth
+     * AuthUser
      * Restituisce l'utente loggato
      * @returns void
      * @throws ApiError
      */
-    public static authenticated(): CancelablePromise<void> {
+    public static authUser(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/authenticated',
+            url: '/api/user/authUser',
         });
     }
-
     /**
      * Get
      * Restituisce l'utente indicato
@@ -38,7 +36,6 @@ export class UserApi {
             },
         });
     }
-
     /**
      * Login
      * Gestisce il tentativo di login.
@@ -63,7 +60,6 @@ export class UserApi {
             mediaType: 'application/json',
         });
     }
-
     /**
      * @returns void
      * @throws ApiError
@@ -74,7 +70,6 @@ export class UserApi {
             url: '/api/user/loginFake',
         });
     }
-
     /**
      * Logout
      * @returns void

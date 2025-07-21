@@ -12,7 +12,7 @@ Route::prefix('api')->group(function () {
     );
 
     Route::prefix('user')->name('user.')->group(function () {
-        Route::post('authenticated', [UserController::class, 'authenticated'])->name('authenticated');
+        Route::post('authUser', [UserController::class, 'authUser'])->name('authenticated');
         Route::post('get/{user}', [UserController::class, 'get'])->name('get');
         Route::post('login', [UserController::class, 'login'])->name('login'); // ->middleware('guest');
         Route::post('loginFake', [UserController::class, 'loginFake'])->name('login')->middleware('guest');

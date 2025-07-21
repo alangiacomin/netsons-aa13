@@ -1,7 +1,7 @@
 import {ReactNode, useState} from "react";
 import {Link} from "react-router-dom";
-import {routes} from "../../areas/app/routes.tsx";
-import {useAuth} from "../../MainProvider.tsx";
+import {routes} from "../../routes.tsx";
+import {useAuth} from "../../../../MainProvider.tsx";
 import classNames from "classnames";
 import NavbarItem from "./NavbarItem.tsx";
 import NavbarDropdown from "./NavbarDropdown.tsx";

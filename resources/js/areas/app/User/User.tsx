@@ -1,34 +1,12 @@
-import {FC, ReactNode, useEffect, useState} from "react";
-import {useLoaderData} from "react-router-dom";
-import {UserApi} from "../../../api";
-import {IUser, useAuth} from "../../../MainProvider.tsx";
+import {FC, ReactNode, useEffect} from "react";
+import {useAuth} from "../../../MainProvider.tsx";
 
 type UserProps = {
     //user?: IUser,
 };
 
 const User: FC<UserProps> = ({}: UserProps): ReactNode => {
-    const userId = useLoaderData();
     const {user} = useAuth();
-    const [userData, setUserData] = useState<IUser | null>(null);
-
-    useEffect(() => {
-        console.log("userId:", userId, user?.id);
-        if (userId) {
-            if (userId === user?.id) {
-                setUserData(user);
-            } else {
-                setUserData(null);
-                UserApi.get(userId)
-                    .then((res: any) => {
-                        setUserData(res);
-                    })
-                    .catch(() => {
-                        setUserData(null);
-                    });
-            }
-        }
-    }, [userId]);
 
     useEffect(() => {
         console.log("user component:", user);
@@ -44,8 +22,8 @@ const User: FC<UserProps> = ({}: UserProps): ReactNode => {
                                 <img src="https://placehold.co/80x80.png?text=Foto" alt="Foto Profilo"
                                      className="rounded-circle me-3"/>
                                 <div>
-                                    <h5 className="card-title mb-0">{userData?.name}</h5>
-                                    <small className="text-muted">{userData?.email}</small>
+                                    <h5 className="card-title mb-0">{user?.name}</h5>
+                                    <small className="text-muted">{user?.email}</small>
                                 </div>
                             </div>
 
@@ -53,7 +31,7 @@ const User: FC<UserProps> = ({}: UserProps): ReactNode => {
 
                             <dl className="row mb-0">
                                 <dt className="col-sm-4">Username</dt>
-                                <dd className="col-sm-8">{userData?.name}</dd>
+                                <dd className="col-sm-8">{user?.name}</dd>
 
                                 <dt className="col-sm-4">Ruolo</dt>
                                 <dd className="col-sm-8">Amministratore</dd>
