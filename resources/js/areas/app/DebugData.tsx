@@ -17,13 +17,32 @@ const DebugData = () => {
             sessionStorage.setItem('debug', JSON.stringify(debug));
         }
     }, [debug]);
-
-    return debug !== null && (debug ? (
-        <div className={"debug-data m-5"}>
-            <button className={"btn btn-link small"} onClick={() => setDebug(false)}>Chiudi</button>
-            <p>User: {user?.name}</p>
+    return (
+        <div className="debug-data position-fixed bottom-0 start-0 w-100 border-top p-3">
+            {debug !== null && (
+                <div className="d-flex justify-content-between align-items-start">
+                    {debug ? (
+                        <>
+                            <div>
+                                <div>User: {user?.name}</div>
+                            </div>
+                            <button className="btn btn-link" onClick={() => setDebug(false)}>
+                                <span className="small">Chiudi</span>
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <div></div>
+                            {/* placeholder per la sinistra */}
+                            <button className="btn btn-link" onClick={() => setDebug(true)}>
+                                <span className="small">Debug</span>
+                            </button>
+                        </>
+                    )}
+                </div>
+            )}
         </div>
-    ) : <button className={"btn btn-link small"} onClick={() => setDebug(true)}>Debug</button>);
+    );
 }
 
 export default DebugData;

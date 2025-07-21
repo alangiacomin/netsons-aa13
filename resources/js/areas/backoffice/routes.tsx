@@ -9,6 +9,7 @@ const routes: RouteObject[] = [
         element: <Layout/>,
         children: [
             {id: "index", index: true, element: <div>qui admin</div>},
+            {id: "users", path: "users", element: <div>qui utenti</div>},
             {id: "fallback", path: "*", element: <div>admin 404</div>},
         ],
     }
