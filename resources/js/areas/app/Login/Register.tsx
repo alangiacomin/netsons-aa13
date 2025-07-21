@@ -1,12 +1,13 @@
 // Register.tsx
 // Piccolo form di registrazione utente con Bulma e React
 
-import {ReactNode, useState} from 'react';
+import {ChangeEvent, FormEvent, ReactNode, useState} from 'react';
 import Section from '../../../components/Section.tsx';
 import './Login.css'; // ri-usa lo stesso SCSS del login
 import {Link} from 'react-router-dom';
 import {faEnvelope, faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {routes} from "../../../hooks/useRoutes.ts";
 
 const Register = (): ReactNode => {
     // Stato locale per i campi del form
@@ -18,13 +19,13 @@ const Register = (): ReactNode => {
     });
 
     // Gestore unico dei cambiamenti
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setDati(prev => ({...prev, [name]: value}));
     };
 
     // Invio del form
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         // Validazioni rapide di esempio
@@ -149,7 +150,7 @@ const Register = (): ReactNode => {
                     {/* Link al login */}
                     <p className="has-text-centered is-size-7 mt-3">
                         Hai già un account?{' '}
-                        <Link to="/login" className="has-text-link">
+                        <Link to={routes.appLogin.path} className="has-text-link">
                             Accedi qui
                         </Link>
                     </p>

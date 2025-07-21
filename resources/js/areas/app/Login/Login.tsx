@@ -6,8 +6,8 @@ import {UserApi} from "../../../api";
 import classNames from "classnames";
 import FieldError from "./FieldError";
 import {useAuth} from "../../../MainProvider.tsx";
-import {routes} from "../routes.tsx";
 import './Login.css';
+import {routes} from "../../../hooks/useRoutes.ts";
 
 type ErrorsType = {
     email?: string[],
@@ -29,7 +29,7 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
     const {user, setUser} = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: routes.root.path};
+    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: routes.appRoot.path};
 
     // Gestore generico per ambedue i campi
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
                     </button>
                     <p className="mt-3 small text-center">
                         Nuovo su questo sito?{' '}
-                        <Link to="/register" className="has-text-link">
+                        <Link to={routes.appRegister.path} className="has-text-link">
                             Crea un account
                         </Link>
                     </p>

@@ -1,8 +1,9 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {routerRoutes as appRoutes} from "./areas/app/routes.tsx";
 import {ReactNode} from "react";
+import {routerRoutes, routes} from "./hooks/useRoutes.ts";
 
-const br = createBrowserRouter(appRoutes);
+console.log(routes);
+const br = createBrowserRouter(routerRoutes);
 
 const Router = (): ReactNode => (<RouterProvider router={br}/>);
 

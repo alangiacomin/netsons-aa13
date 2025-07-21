@@ -8,7 +8,7 @@ import FunzioniVarie from "./FunzioniVarie/FunzioniVarie.tsx";
 import Login from "./Login/Login.tsx";
 import Fumetti from "./Fumetti/Fumetti.tsx";
 
-const routerRoutes: RouteObject[] = [
+const routes: RouteObject[] = [
     {
         id: "root",
         path: "/",
@@ -25,46 +25,6 @@ const routerRoutes: RouteObject[] = [
     }
 ];
 
-type RouteInfo = {
-    path: string;
-}
-
-type RouteMap = Record<string, RouteInfo>;
-
-/**
- * Crea la mappa dei path a partire dai RouteObject.
- * @param routes  array dei route (lo stesso che passi a <RouterProvider>)
- * @param base    path accumulato dai parent (default: "")
- */
-const buildRouteMap = (
-    routes: RouteObject[],
-    base = ""
-): RouteMap => {
-    return routes.reduce<RouteMap>((acc, route) => {
-        // calcola il path “assoluto” di questo nodo
-        const current = route.index
-            ? base || "/"
-            : route.path === "*"
-                ? `${base}*`
-                : `${base}${base && !base.endsWith("/") ? "/" : ""}${route.path ?? ""}`;
-
-        // se c’è un id lo memorizziamo
-        if (route.id) {
-            acc[route.id] = {path: current};
-        }
-
-        // visita eventuali figli
-        if (route.children?.length) {
-            Object.assign(acc, buildRouteMap(route.children, current));
-        }
-
-        return acc;
-    }, {});
-}
-
-const routes: RouteMap = buildRouteMap(routerRoutes);
-
 export {
-    routerRoutes,
-    routes,
+    routes as routerRoutes,
 };

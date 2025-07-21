@@ -1,6 +1,5 @@
 import {ReactNode, useState} from "react";
 import {Link} from "react-router-dom";
-import {routes} from "../../routes.tsx";
 import {useAuth} from "../../../../MainProvider.tsx";
 import classNames from "classnames";
 import NavbarItem from "./NavbarItem.tsx";
@@ -9,6 +8,7 @@ import NavbarDropdownItem from "./NavbarDropdownItem.tsx";
 import NavbarDropdownDivider from "./NavbarDropdownDivider.tsx";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {routes} from "../../../../hooks/useRoutes.ts";
 
 const Navbar = (): ReactNode => {
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -19,11 +19,11 @@ const Navbar = (): ReactNode => {
 
     const navConfig = {
         home: {
-            path: routes.root.path,
+            path: routes.appRoot.path,
             label: "Home",
         },
         fumetti: {
-            path: routes.fumetti.path,
+            path: routes.appFumetti.path,
             label: "Fumetti",
         }
     };
@@ -40,7 +40,6 @@ const Navbar = (): ReactNode => {
             return String(value);
         });
     }
-
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -62,18 +61,19 @@ const Navbar = (): ReactNode => {
                             {user && (
                                 <>
                                     <NavbarDropdownItem
-                                        to={buildPath(routes.user.path, {id: user.id})}>User</NavbarDropdownItem>
+                                        to={buildPath(routes.appUser.path, {id: user.id})}>User</NavbarDropdownItem>
                                     <NavbarDropdownItem
-                                        to={buildPath(routes.user.path, {id: 2})}>User 2</NavbarDropdownItem>
-                                    <NavbarDropdownItem to={"#"}>Seconda azione</NavbarDropdownItem>
+                                        to={buildPath(routes.appUser.path, {id: 2})}>User 2</NavbarDropdownItem>
+                                    <NavbarDropdownItem
+                                        to={routes.adminRoot.path}>Admin</NavbarDropdownItem>
                                     <NavbarDropdownDivider/>
-                                    <NavbarDropdownItem to={routes.logout.path}>Logout</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.appLogout.path}>Logout</NavbarDropdownItem>
                                 </>
                             )}
                             {!user && (
                                 <>
-                                    <NavbarDropdownItem to={routes.login.path}>Login</NavbarDropdownItem>
-                                    <NavbarDropdownItem to={routes.register.path}>Register</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.appLogin.path}>Login</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.appRegister.path}>Register</NavbarDropdownItem>
                                 </>
                             )}
                         </NavbarDropdown>
