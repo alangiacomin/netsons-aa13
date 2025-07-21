@@ -1,7 +1,7 @@
 import {ReactNode, useCallback, useEffect} from "react";
 import {useAuth} from "../../../MainProvider.tsx";
 import {useNavigate} from "react-router-dom";
-import './Logout.scss';
+import './Logout.css';
 import {UserApi} from "../../../api";
 import {routes} from "../routes.tsx";
 
@@ -26,7 +26,7 @@ const Logout = (): ReactNode => {
             });
     }, []);
 
-    return (<div className={"logout"}>... logout in corso...</div>);
+    return (<div className={"logout"}>... logout in corso ...</div>);
 };
 
 export default Logout;
