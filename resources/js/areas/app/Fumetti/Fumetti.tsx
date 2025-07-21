@@ -49,11 +49,8 @@ const Fumetti2 = (): ReactNode => {
                 </thead>
                 <tbody className={"table-group-divider"}>
                 {!fumetti && (
-                    <tr className={"placeholder-glow"}>
-                        <th><span className="placeholder col-12"></span></th>
-                        <th><span className="placeholder col-12"></span></th>
-                        <th><span className="placeholder col-12"></span></th>
-                        <th><span className="placeholder col-12"></span></th>
+                    <tr className={"text-center"}>
+                        <td colSpan={4} className={"py-3"}>... loading ...</td>
                     </tr>)}
                 {fumetti && fumetti.length == 0 && (
                     <tr className={"text-center"}>

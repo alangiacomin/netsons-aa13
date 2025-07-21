@@ -7,18 +7,6 @@ type UserProps = {
     //user?: IUser,
 };
 
-type PlaceholderType = {
-    value: ReactNode,
-};
-
-const Placeholder: FC<PlaceholderType> = ({value}: PlaceholderType) => {
-    return value
-        ? value
-        : (<span className="placeholder-wave">
-            <span className="placeholder w-25"></span>
-        </span>);
-}
-
 const User: FC<UserProps> = ({}: UserProps): ReactNode => {
     const userId = useLoaderData();
     const {user} = useAuth();
@@ -65,7 +53,7 @@ const User: FC<UserProps> = ({}: UserProps): ReactNode => {
 
                             <dl className="row mb-0">
                                 <dt className="col-sm-4">Username</dt>
-                                <dd className="col-sm-8"><Placeholder value={userData?.name}/></dd>
+                                <dd className="col-sm-8">{userData?.name}</dd>
 
                                 <dt className="col-sm-4">Ruolo</dt>
                                 <dd className="col-sm-8">Amministratore</dd>
