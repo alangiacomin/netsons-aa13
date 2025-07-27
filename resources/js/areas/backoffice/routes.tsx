@@ -2,6 +2,7 @@ import {RouteObject} from "react-router-dom";
 
 import Layout from "./Layout.tsx";
 import Users from "./users/Users.tsx";
+import Fumetti from "./fumetti/Fumetti.tsx";
 
 const routes: RouteObject[] = [
     {
@@ -11,6 +12,7 @@ const routes: RouteObject[] = [
         children: [
             {id: "index", index: true, element: <div>qui admin</div>},
             {id: "users", path: "users", element: <Users/>},
+            {id: "fumetti", path: "fumetti", element: <Fumetti/>},
             {id: "fallback", path: "*", element: <div>admin 404</div>},
         ],
     }

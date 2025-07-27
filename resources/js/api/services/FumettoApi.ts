@@ -22,7 +22,7 @@ export class FumettoApi {
      * Store
      * Store a newly created resource in storage.
      * @param requestBody
-     * @returns void
+     * @returns any
      * @throws ApiError
      */
     public static store(
@@ -31,9 +31,14 @@ export class FumettoApi {
              * Must not be greater than 255 characters.
              */
             Titolo: string;
-            Numero: string;
+            Numero: number;
         },
-    ): CancelablePromise<void> {
+    ): CancelablePromise<{
+        Id?: number;
+        Numero?: number;
+        Titolo?: string;
+        DataPubblicazione?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/fumetti',
@@ -45,12 +50,17 @@ export class FumettoApi {
      * Show
      * Display the specified resource.
      * @param fumettoId The ID of the fumetto.
-     * @returns void
+     * @returns any
      * @throws ApiError
      */
     public static show(
         fumettoId: number,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<{
+        Id?: number;
+        Numero?: number;
+        Titolo?: string;
+        DataPubblicazione?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/fumetti/{fumetto_id}',
@@ -63,12 +73,17 @@ export class FumettoApi {
      * Update
      * Update the specified resource in storage.
      * @param fumettoId The ID of the fumetto.
-     * @returns void
+     * @returns any
      * @throws ApiError
      */
     public static update(
         fumettoId: number,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<{
+        Id?: number;
+        Numero?: number;
+        Titolo?: string;
+        DataPubblicazione?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/fumetti/{fumetto_id}',

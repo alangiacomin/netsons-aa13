@@ -3,6 +3,7 @@ import {FumettoApi} from "../../../api";
 import {useAuth} from "../../../MainProvider.tsx";
 import {useLocation} from "react-router-dom";
 import Login from "../Login/Login.tsx";
+import {IFumetto} from "../../backoffice/fumetti/Fumetti.tsx";
 
 
 interface Props {
@@ -26,13 +27,14 @@ const RequireAuthInline: FC<Props> = ({children}) => {
 
 const Fumetti2 = (): ReactNode => {
 
-    const [fumetti, setFumetti] = useState<any[] | null>(null)
+    const [fumetti, setFumetti] = useState<IFumetto[] | null>(null)
 
     useEffect(() => {
-        FumettoApi.list().then((res: any) => {
-            console.log(res);
-            setFumetti(res);
-        });
+        FumettoApi.list()
+            .then((res) => {
+                console.log(res);
+                setFumetti(res);
+            });
     }, []);
 
     return (
@@ -57,8 +59,8 @@ const Fumetti2 = (): ReactNode => {
                         <td colSpan={4} className={"py-3"}>Trovato nulla</td>
                     </tr>)}
                 {fumetti && fumetti.map((f) => (
-                    <tr key={f.id}>
-                        <th scope="row">{f.id}</th>
+                    <tr key={f.Id}>
+                        <th scope="row">{f.Id}</th>
                         <td>{f.Numero}</td>
                         <td>{f.Titolo}</td>
                         <td>{f.DataPubblicazione}</td>

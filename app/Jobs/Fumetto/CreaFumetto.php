@@ -24,12 +24,16 @@ class CreaFumetto extends Job
     public function handle()
     {
         // print_r($fumetto);
-        echo 'Titolo: '.print_r($this->data['Titolo'], true)."\n";
+        // echo 'Titolo: '.print_r($this->data['Titolo'], true)."\n";
         if ($this->job != null) {
             Log::info("CreaFumetto: {$this->job->attempts()}");
         }
 
-        $ff = Fumetto::create($this->data);
+        $ff = Fumetto::create([
+            'DataPubblicazione' => fake()->dateTime('-30 years'),
+            ...$this->data,
+        ]);
+        // print_r($ff);
 
         return $ff;
         // Fumetto::create([

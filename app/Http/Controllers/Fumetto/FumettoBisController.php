@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Fumetto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Fumetto\StoreFumettoRequest;
 use App\Http\Requests\Fumetto\UpdateFumettoRequest;
+use App\Http\Resources\FumettoResource;
 use App\Jobs\Fumetto\CreaFumetto;
 use App\Jobs\Fumetto\CreaFumettoRandom;
 use App\Models\Fumetto;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,13 +26,17 @@ class FumettoBisController extends Controller
      * List
      *
      * Display a listing of the resource.
+     *
+     * @apiResourceCollection  App\Http\Resources\FumettoResource
+     *
+     * @apiResourceModel       App\Models\Fumetto
      */
     public function index()
     {
         //
         // CreaFumettoRandom::dispatch();
 
-        return response()->json(Fumetto::all(), Response::HTTP_OK);
+        return FumettoResource::collection(Fumetto::all());
     }
 
     /**
@@ -38,14 +44,17 @@ class FumettoBisController extends Controller
      *
      * Store a newly created resource in storage.
      *
-     * @param  StoreFumettoRequest  $request  dati da salvere
+     * @param  StoreFumettoRequest  $request  dati da salvare
+     *
+     * @apiResource            App\Http\Resources\FumettoResource
+     *
+     * @apiResourceModel       App\Models\Fumetto
      */
-    public function store(StoreFumettoRequest $request)
+    public function store(StoreFumettoRequest $request): JsonResource
     {
-        //
-        $ret = CreaFumetto::dispatch($request->validated());
+        $ret = CreaFumetto::execute([...$request->validated()]);
 
-        return response()->json($ret, Response::HTTP_CREATED);
+        return new FumettoResource($ret);
     }
 
     /**
@@ -54,22 +63,32 @@ class FumettoBisController extends Controller
      * Display the specified resource.
      *
      * @param  Fumetto  $fumetto  ID Del fumetto
+     *
+     * @apiResource            App\Http\Resources\FumettoResource
+     *
+     * @apiResourceModel       App\Models\Fumetto
      */
     public function show(Fumetto $fumetto)
     {
-        //
+        return new FumettoResource($fumetto);
     }
 
     /**
      * Update
      *
      * Update the specified resource in storage.
+     *
+     * @apiResource            App\Http\Resources\FumettoResource
+     *
+     * @apiResourceModel       App\Models\Fumetto
      */
     public function update(UpdateFumettoRequest $request, Fumetto $fumetto)
     {
         //
         // return response()->json($fumetto, Response::HTTP_OK);
-        CreaFumettoRandom::execute($fumetto);
+        $ret = CreaFumettoRandom::execute($fumetto);
+
+        return new FumettoResource($ret);
     }
 
     /**
@@ -79,6 +98,8 @@ class FumettoBisController extends Controller
      */
     public function destroy(Fumetto $fumetto)
     {
-        //
+        $fumetto->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

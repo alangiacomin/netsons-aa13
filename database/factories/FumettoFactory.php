@@ -17,7 +17,9 @@ class FumettoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'Titolo' => fake()->name(),
+            'Numero' => fake()->numberBetween(1, 200),
+            'DataPubblicazione' => fake()->date(),
         ];
     }
 }

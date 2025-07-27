@@ -9,9 +9,13 @@ const Sidebar = (): ReactNode => {
             path: routes.adminRoot.path,
             label: "Home",
         },
-        fumetti: {
+        utenti: {
             path: routes.adminUsers.path,
             label: "Utenti",
+        },
+        fumetti: {
+            path: routes.adminFumetti.path,
+            label: "Fumetti",
         }
     };
 

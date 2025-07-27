@@ -23,7 +23,7 @@ class StoreFumettoRequest extends FormRequest
     {
         return [
             'Titolo' => 'required|max:255',
-            'Numero' => 'required',
+            'Numero' => 'required|integer',
         ];
     }
 }

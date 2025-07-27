@@ -6,6 +6,8 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,7 +23,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::updateOrCreate(
+        $adminUser = User::updateOrCreate(
             ['email' => 'admin@example.com'], // email unica
             [
                 'name' => 'Admin',
@@ -30,7 +32,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        User::updateOrCreate(
+        $testerUser = User::updateOrCreate(
             ['email' => 'test@example.com'], // email unica
             [
                 'name' => 'Tester',
@@ -38,5 +40,8 @@ class DatabaseSeeder extends Seeder
                 // 'is_admin' => true, // se hai questo campo per distinguere admin
             ]
         );
+
+        $adminRole = Role::create(['name' => 'admin']);
+        Permission::create(['name' => 'edit articles'])->assignRole($adminRole);
     }
 }
