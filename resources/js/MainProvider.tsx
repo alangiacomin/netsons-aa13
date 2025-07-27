@@ -36,7 +36,7 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
 
     // Aggiornamento tramite BE dell'utente veramente connesso
     useEffect(() => {
-        UserApi.authUser()
+        UserApi.authenticated()
             .then((res: any) => {
                 setUser(res as IUser);
             });

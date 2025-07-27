@@ -31,8 +31,6 @@ class FumettoBisController extends Controller
         // CreaFumettoRandom::dispatch();
 
         return response()->json(Fumetto::all(), Response::HTTP_OK);
-
-        return view('home');
     }
 
     /**

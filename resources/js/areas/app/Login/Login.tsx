@@ -108,6 +108,24 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
                         disabled={isFetching || !!user}>
                         {isFetching ? (<FontAwesomeIcon icon={faSpinner}/>) : "Entra"}
                     </button>
+                    <div className="d-block mx-auto w-50">
+                        <button
+                            type={"button"}
+                            className={classNames("btn")}
+                            onClick={() => {
+                                setCredenziali({...credenziali, email: "admin@example.com", password: "password123"})
+                            }}>
+                            Admin
+                        </button>
+                        <button
+                            type={"button"}
+                            className={classNames("btn")}
+                            onClick={() => {
+                                setCredenziali({...credenziali, email: "test@example.com", password: "password123"})
+                            }}>
+                            Tester
+                        </button>
+                    </div>
                     <p className="mt-3 small text-center">
                         Nuovo su questo sito?{' '}
                         <Link to={routes.appRegister.path} className="has-text-link">

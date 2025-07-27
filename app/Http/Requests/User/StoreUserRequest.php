@@ -4,27 +4,26 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
-        // Lascia true: il login deve essere accessibile a chiunque.
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'exists:users,email'],
-            'password' => ['required', 'string'],
-            'remember' => ['sometimes', 'boolean'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'email.exists' => 'Non esiste alcun account con questa e-mail.',
+            'email' => 'required|email|unique:users,email',
+            'name' => 'required|max:255',
         ];
     }
 
@@ -40,9 +39,9 @@ class LoginRequest extends FormRequest
                 'description' => 'L\'indirizzo email dell\'utente.',
                 'example' => 'utente@example.com',
             ],
-            'password' => [
-                'description' => 'La password',
-                'example' => '*****',
+            'name' => [
+                'description' => 'Il nome completo dell\'utente.',
+                'example' => 'Mario Rossi',
             ],
         ];
     }

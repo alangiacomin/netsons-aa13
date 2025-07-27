@@ -56,6 +56,16 @@ const Navbar = (): ReactNode => {
                             </NavbarItem>))}
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {user && (
+                            <>
+                                <NavbarItem to={routes.adminRoot.path}>Admin</NavbarItem>
+                                <NavbarItem to={routes.appLogout.path}>Logout</NavbarItem>
+                            </>)}
+                        {!user && (
+                            <>
+                                <NavbarItem to={routes.appLogin.path}>Login</NavbarItem>
+                            </>)}
+                        <span>___</span>
                         <NavbarDropdown label={(
                             <span><FontAwesomeIcon icon={faUser}/> {user ? user.name : "User"} </span>)}>
                             {user && (

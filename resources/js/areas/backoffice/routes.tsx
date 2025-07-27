@@ -1,6 +1,7 @@
 import {RouteObject} from "react-router-dom";
 
 import Layout from "./Layout.tsx";
+import Users from "./users/Users.tsx";
 
 const routes: RouteObject[] = [
     {
@@ -9,7 +10,7 @@ const routes: RouteObject[] = [
         element: <Layout/>,
         children: [
             {id: "index", index: true, element: <div>qui admin</div>},
-            {id: "users", path: "users", element: <div>qui utenti</div>},
+            {id: "users", path: "users", element: <Users/>},
             {id: "fallback", path: "*", element: <div>admin 404</div>},
         ],
     }

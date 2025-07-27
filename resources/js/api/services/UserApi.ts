@@ -7,52 +7,45 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserApi {
     /**
-     * AuthUser
+     * Authenticated
      * Restituisce l'utente loggato
-     * @returns string
+     * @returns any
      * @throws ApiError
      */
-    public static authUser(): CancelablePromise<string> {
+    public static authenticatedRestituisceLutenteLoggato(): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/user/authUser',
-        });
-    }
-    /**
-     * Get
-     * Restituisce l'utente indicato
-     * @param userId The ID of the user.
-     * @returns void
-     * @throws ApiError
-     */
-    public static get(
-        userId: number,
-    ): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/user/get/{user_id}',
-            path: {
-                'user_id': userId,
-            },
+            url: '/api/user/authenticated',
         });
     }
     /**
      * Login
      * Gestisce il tentativo di login.
      * @param requestBody
-     * @returns void
+     * @returns any
      * @throws ApiError
      */
     public static login(
         requestBody: {
             /**
-             * Must be a valid email address. The <code>email</code> of an existing record in the users table.
+             * L'indirizzo email dell'utente. Must be a valid email address. The <code>email</code> of an existing record in the users table.
              */
             email: string;
+            /**
+             * La password.
+             */
             password: string;
             remember?: boolean;
         },
-    ): CancelablePromise<void> {
+    ): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/login',
@@ -61,10 +54,16 @@ export class UserApi {
         });
     }
     /**
-     * @returns void
+     * Login fake
+     * Gestisce il tentativo di login.
+     * @returns any
      * @throws ApiError
      */
-    public static postApiUserLoginFake(): CancelablePromise<void> {
+    public static loginFake(): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/loginFake',
@@ -79,6 +78,110 @@ export class UserApi {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/user/logout',
+        });
+    }
+    /**
+     * List
+     * Display a listing of the resource.
+     * @returns any
+     * @throws ApiError
+     */
+    public static list(): CancelablePromise<Array<Record<string, any>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/user',
+        });
+    }
+    /**
+     * Store
+     * Store a newly created resource in storage.
+     * @param requestBody
+     * @returns any
+     * @throws ApiError
+     */
+    public static store(
+        requestBody: {
+            /**
+             * L'indirizzo email dell'utente. Must be a valid email address.
+             */
+            email: string;
+            /**
+             * Il nome completo dell'utente. Must not be greater than 255 characters.
+             */
+            name: string;
+        },
+    ): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/user',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Show
+     * Display the specified resource.
+     * @param id The ID of the user.
+     * @returns any
+     * @throws ApiError
+     */
+    public static show(
+        id: number,
+    ): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/user/{id}',
+            path: {
+                'id': id,
+            },
+        });
+    }
+    /**
+     * Update
+     * Update the specified resource in storage.
+     * @param id The ID of the user.
+     * @returns any
+     * @throws ApiError
+     */
+    public static update(
+        id: number,
+    ): CancelablePromise<{
+        id?: number;
+        name?: string;
+        email?: string;
+    }> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/user/{id}',
+            path: {
+                'id': id,
+            },
+        });
+    }
+    /**
+     * Destroy
+     * Remove the specified resource from storage.
+     * @param id The ID of the user.
+     * @returns void
+     * @throws ApiError
+     */
+    public static destroy(
+        id: number,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/user/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 }
