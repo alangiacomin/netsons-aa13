@@ -25,7 +25,7 @@ const Users = (): ReactNode => {
     }, [loadUsers]);
 
     const creaNuovo = useCallback(() => {
-        UserApi.store({name: "nome", email: "test_@example.com"})
+        UserApi.store({name: "nome", email: "test_" + Math.random().toString(36).substring(2, 5) + "@example.com"})
             .then((res) => {
                 setUsers([...(users ?? []), {
                     id: res.id ?? 0,

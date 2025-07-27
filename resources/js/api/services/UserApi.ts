@@ -12,7 +12,7 @@ export class UserApi {
      * @returns any
      * @throws ApiError
      */
-    public static authenticatedRestituisceLutenteLoggato(): CancelablePromise<{
+    public static authenticated(): CancelablePromise<{
         id?: number;
         name?: string;
         email?: string;

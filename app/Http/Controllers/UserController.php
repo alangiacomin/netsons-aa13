@@ -157,6 +157,7 @@ class UserController extends Controller
 
     /**
      * Authenticated
+     *
      * Restituisce l'utente loggato
      *
      * @apiResource      App\Http\Resources\UserResource

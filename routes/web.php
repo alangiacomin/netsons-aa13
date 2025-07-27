@@ -5,11 +5,11 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
-    // Route::apiResource('fumetti', FumettoBisController::class)->parameters(
-    //     [
-    //         'fumetti' => 'fumetto',
-    //     ]
-    // );
+    Route::apiResource('fumetti', FumettoBisController::class)->parameters(
+        [
+            'fumetti' => 'fumetto',
+        ]
+    );
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('authenticated', [UserController::class, 'authenticated'])->name('authenticated');

@@ -7,4 +7,5 @@ export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
+export { FumettoApi } from './services/FumettoApi';
 export { UserApi } from './services/UserApi';
