@@ -45,12 +45,12 @@ export class FumettoApi {
      * Show
      * Display the specified resource.
      * @param fumettoId The ID of the fumetto.
-     * @returns string
+     * @returns void
      * @throws ApiError
      */
     public static show(
         fumettoId: number,
-    ): CancelablePromise<string> {
+    ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/fumetti/{fumetto_id}',

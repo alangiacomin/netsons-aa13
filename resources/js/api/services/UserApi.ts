@@ -9,12 +9,12 @@ export class UserApi {
     /**
      * AuthUser
      * Restituisce l'utente loggato
-     * @returns void
+     * @returns string
      * @throws ApiError
      */
-    public static authUser(): CancelablePromise<void> {
+    public static authUser(): CancelablePromise<string> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'GET',
             url: '/api/user/authUser',
         });
     }
@@ -29,7 +29,7 @@ export class UserApi {
         userId: number,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'GET',
             url: '/api/user/get/{user_id}',
             path: {
                 'user_id': userId,
