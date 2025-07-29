@@ -2,46 +2,28 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            UsersSeeder::class,
+            FumettoSeeder::class,
+        ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        $adminUser = User::updateOrCreate(
-            ['email' => 'admin@example.com'], // email unica
-            [
-                'name' => 'Admin',
-                'password' => Hash::make('password123'), // scegli una password sicura
-                // 'is_admin' => true, // se hai questo campo per distinguere admin
-            ]
-        );
-
-        $testerUser = User::updateOrCreate(
-            ['email' => 'test@example.com'], // email unica
-            [
-                'name' => 'Tester',
-                'password' => Hash::make('password123'), // scegli una password sicura
-                // 'is_admin' => true, // se hai questo campo per distinguere admin
-            ]
-        );
-
-        $adminRole = Role::create(['name' => 'admin']);
-        Permission::create(['name' => 'edit articles'])->assignRole($adminRole);
+        User::where('email', 'test@example.com')->first()->assignRole(RoleEnum::SUPER_ADMIN);
+        User::where('email', 'admin@example.com')->first()->assignRole(RoleEnum::ADMIN);
+        User::where('email', 'test@example.com')->first()->assignRole(RoleEnum::EDITOR);
     }
 }

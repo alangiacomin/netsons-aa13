@@ -1,6 +1,5 @@
 import {ReactNode, useState} from "react";
 import {Link} from "react-router-dom";
-import {useAuth} from "../../../../MainProvider.tsx";
 import classNames from "classnames";
 import NavbarItem from "./NavbarItem.tsx";
 import NavbarDropdown from "./NavbarDropdown.tsx";
@@ -9,6 +8,7 @@ import NavbarDropdownDivider from "./NavbarDropdownDivider.tsx";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {routes} from "../../../../hooks/useRoutes.ts";
+import useAuth from "../../../../hooks/useAuth.tsx";
 
 const Navbar = (): ReactNode => {
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -25,6 +25,10 @@ const Navbar = (): ReactNode => {
         fumetti: {
             path: routes.appFumetti.path,
             label: "Fumetti",
+        },
+        fumetti2: {
+            path: routes.appFumetti2.path,
+            label: "Fumetti2",
         }
     };
 

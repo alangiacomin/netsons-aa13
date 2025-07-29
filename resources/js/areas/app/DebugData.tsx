@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
-import {useAuth} from "../../MainProvider.tsx";
+import useAuth from "../../hooks/useAuth.tsx";
+
 
 const DebugData = () => {
     const [debug, setDebug] = useState<boolean | null>(null);

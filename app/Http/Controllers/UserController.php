@@ -6,6 +6,8 @@ use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -164,9 +166,15 @@ class UserController extends Controller
      *
      * @apiResourceModel App\Models\User
      */
-    public function authenticated(): JsonResource
+    public function authenticated(): UserResource|ResponseFactory|Application|Response
     {
-        return new UserResource(Auth::user());
+        $user = Auth::user()?->load('permissions');
+
+        if ($user) {
+            return new UserResource($user);
+        }
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**

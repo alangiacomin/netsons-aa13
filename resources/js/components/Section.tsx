@@ -1,19 +1,36 @@
 import {FC, ReactNode} from "react";
+import {useLocation} from "react-router-dom";
+import Login from "../areas/app/Login/Login.tsx";
+import useAuth from "../hooks/useAuth.tsx";
 
-interface SectionProps {
-    title: string;
-    subtitle: string;
+type SectionProps = {
+    id: string;
     children?: ReactNode;
-    className?: string;
 }
 
-const Section: FC<SectionProps> = ({title, subtitle, children}: SectionProps): ReactNode => {
+const Section: FC<SectionProps> = ({id, children}: SectionProps): ReactNode => {
+
+    const {user} = useAuth();
+    const location = useLocation();
+
+    if (user && user.can('section-' + id)) {
+        return (
+            <>
+                <h1 className="title">Titolo</h1>
+                <h2 className="subtitle">{id}</h2>
+                {children}
+            </>);
+    }
+
+
+    if (!user) {
+        return <Login redirectTo={location.pathname}/>;
+    }
+
     return (
-        <>
-            <h1 className="title">{title}</h1>
-            <h2 className="subtitle">{subtitle}</h2>
-            {children}
-        </>);
+        <div>NON SEI AUTORIZZATO</div>
+    )
+
 }
 
 

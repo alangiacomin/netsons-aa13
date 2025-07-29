@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Enums\RoleEnum;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,18 +28,26 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         //
-        Queue::before(function (JobProcessing $event) {
+        Queue::before(function (/* JobProcessing $event */) {
             DB::beginTransaction();
             // $event->connectionName
             // $event->job
             // $event->job->payload()
         });
 
-        Queue::after(function (JobProcessed $event) {
+        Queue::after(function (/* JobProcessed $event */) {
             DB::commit();
             // $event->connectionName
             // $event->job
             // $event->job->payload()
+        });
+
+        Gate::before(function (User $user) {
+            if ($user->hasRole(RoleEnum::SUPER_ADMIN->value)) {
+                return true;
+            }
+
+            return null;
         });
     }
 }

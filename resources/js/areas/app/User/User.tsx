@@ -1,5 +1,6 @@
 import {FC, ReactNode, useEffect} from "react";
-import {useAuth} from "../../../MainProvider.tsx";
+import useAuth from "../../../hooks/useAuth.tsx";
+
 
 type UserProps = {
     //user?: IUser,

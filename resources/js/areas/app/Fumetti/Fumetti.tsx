@@ -1,33 +1,10 @@
-import {FC, ReactNode, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {FumettoApi} from "../../../api";
-import {useAuth} from "../../../MainProvider.tsx";
-import {useLocation} from "react-router-dom";
-import Login from "../Login/Login.tsx";
 import {IFumetto} from "../../backoffice/fumetti/Fumetti.tsx";
 
 
-interface Props {
-    children: ReactNode;          // ciò che vuoi proteggere (es. <Fumetti />)
-}
-
-const RequireAuthInline: FC<Props> = ({children}) => {
-    const {user} = useAuth();
-    const location = useLocation();
-
-    if (!user) {
-        // Non loggato: mostro direttamente il login,
-        // passando il path corrente per il redirect post-login
-        return <Login redirectTo={location.pathname}/>;
-    }
-
-    // Loggato: mostro il contenuto protetto
-    return <>{children}</>;
-}
-
-
-const Fumetti2 = (): ReactNode => {
-
-    const [fumetti, setFumetti] = useState<IFumetto[] | null>(null)
+const Fumetti = () => {
+    const [fumetti, setFumetti] = useState<IFumetto[] | null>(null);
 
     useEffect(() => {
         FumettoApi.list()
@@ -39,7 +16,7 @@ const Fumetti2 = (): ReactNode => {
 
     return (
         <div className={"container"}>
-            <p>Corpo dei fumetti</p>
+            <p>Corpo dei fumetti 2</p>
             <table className="table">
                 <thead>
                 <tr>
@@ -68,12 +45,6 @@ const Fumetti2 = (): ReactNode => {
                 </tbody>
             </table>
         </div>);
-};
-
-const Fumetti = () => {
-    return (<RequireAuthInline>
-        <Fumetti2/>
-    </RequireAuthInline>);
-};
+}
 
 export default Fumetti;

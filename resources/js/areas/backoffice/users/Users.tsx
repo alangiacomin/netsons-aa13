@@ -1,9 +1,10 @@
 import {ReactNode, useCallback, useEffect, useState} from "react";
-import {IUser, useAuth} from "../../../MainProvider.tsx";
+import {IUser} from "../../../MainProvider.tsx";
 import {UserApi} from "../../../api";
 import {faPen, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import useAuth from "../../../hooks/useAuth.tsx";
 
 const Users = (): ReactNode => {
     const [users, setUsers] = useState<IUser[] | null>(null)
