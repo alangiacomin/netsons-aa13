@@ -29,7 +29,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get custom body parameters description for Scribe.
+     * Get a custom body parameters description for Scribe.
      *
      * @return array<string, array<string, string>>
      */

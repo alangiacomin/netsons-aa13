@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fumetto extends Model
 {
-    /** @use HasFactory<\Database\Factories\FumettoFactory> */
     use HasFactory;
 
     protected $fillable = [
         'Titolo',
         'Numero',
         'DataPubblicazione',
+    ];
+
+    protected $casts = [
+        'DataPubblicazione' => 'datetime',
     ];
 }

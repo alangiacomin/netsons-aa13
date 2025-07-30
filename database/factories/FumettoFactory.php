@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Fumetto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Fumetto>
+ * @extends Factory<Fumetto>
  */
 class FumettoFactory extends Factory
 {

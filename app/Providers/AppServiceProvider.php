@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::before(function (User $user) {
-            if ($user->hasRole(RoleEnum::SUPER_ADMIN->value)) {
+            if ($user->hasRole(RoleEnum::SUPER_ADMIN)) {
                 return true;
             }
 

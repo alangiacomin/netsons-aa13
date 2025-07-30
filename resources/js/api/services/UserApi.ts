@@ -16,6 +16,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -45,6 +47,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -63,6 +67,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -114,6 +120,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -135,6 +143,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -157,6 +167,8 @@ export class UserApi {
         id?: number;
         name?: string;
         email?: string;
+        isSuperAdmin?: boolean;
+        permissions?: any[];
     }> {
         return __request(OpenAPI, {
             method: 'PUT',
