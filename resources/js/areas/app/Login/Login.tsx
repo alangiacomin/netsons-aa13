@@ -7,7 +7,8 @@ import classNames from "classnames";
 import FieldError from "./FieldError";
 import './Login.css';
 import useAuth from "../../../hooks/useAuth.tsx";
-import routes from "../../../routes.tsx";
+import routes from "../../../routes.ts";
+import {IUser} from "../../../types/UserTypes.tsx";
 
 type ErrorsType = {
     email?: string[],
@@ -42,12 +43,12 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
         //setErrors(null);
         setIsFetching(true);
         UserApi.login(credenziali)
-            .then((res: any) => {
-                setUser(res);
+            .then((res) => {
+                setUser(res as IUser);
                 navigate(from, {replace: true});
 
             })
-            .catch((err: any) => {
+            .catch((err) => {
                 setErrors(err.body.errors);
             })
             .finally(() => {

@@ -1,6 +1,6 @@
 import {RouteObject} from "react-router-dom";
 
-import routes from "../../routes.tsx";
+import routes from "../../routes.ts";
 import Layout from "./Layout.tsx";
 import Users from "./users/Users.tsx";
 import Fumetti from "./fumetti/Fumetti.tsx";

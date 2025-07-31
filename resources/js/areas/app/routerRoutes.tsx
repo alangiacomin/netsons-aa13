@@ -7,7 +7,7 @@ import Register from "./Login/Register.tsx";
 import Logout from "./Login/Logout.tsx";
 import Login from "./Login/Login.tsx";
 import FunzioniVarie from "./FunzioniVarie/FunzioniVarie.tsx";
-import routes from "../../routes.tsx";
+import routes from "../../routes.ts";
 
 export const routerRoutes: RouteObject[] = [
     {

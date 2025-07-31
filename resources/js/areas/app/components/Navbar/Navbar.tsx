@@ -8,7 +8,7 @@ import NavbarDropdownDivider from "./NavbarDropdownDivider.tsx";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import useAuth from "../../../../hooks/useAuth.tsx";
-import routes from "../../../../routes.tsx";
+import routes from "../../../../routes.ts";
 
 const Navbar = (): ReactNode => {
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);

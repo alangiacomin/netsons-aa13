@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import SidebarItem from "./SidebarItem.tsx";
-import routes from "../../../../routes.tsx";
+import routes from "../../../../routes.ts";
 
 const Sidebar = (): ReactNode => {
 

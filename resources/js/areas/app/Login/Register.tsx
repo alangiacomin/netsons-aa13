@@ -6,7 +6,7 @@ import './Login.css'; // ri-usa lo stesso SCSS del login
 import {Link} from 'react-router-dom';
 import {faEnvelope, faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import routes from "../../../routes.tsx";
+import routes from "../../../routes.ts";
 
 const Register = (): ReactNode => {
     // Stato locale per i campi del form

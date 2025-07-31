@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import './Logout.css';
 import {UserApi} from "../../../api";
 import useAuth from "../../../hooks/useAuth.tsx";
-import routes from "../../../routes.tsx";
+import routes from "../../../routes.ts";
 
 const Logout = (): ReactNode => {
 
