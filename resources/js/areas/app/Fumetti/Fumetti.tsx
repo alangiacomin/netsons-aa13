@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {FumettoApi} from "../../../api";
-import {IFumetto} from "../../backoffice/fumetti/Fumetti.tsx";
-
+import {IFumetto} from "../../../types/FumettiTypes.tsx";
 
 const Fumetti = () => {
     const [fumetti, setFumetti] = useState<IFumetto[] | null>(null);
@@ -10,7 +9,8 @@ const Fumetti = () => {
         FumettoApi.list()
             .then((res) => {
                 console.log(res);
-                setFumetti(res);
+                setFumetti(res as IFumetto[]);
+
             });
     }, []);
 

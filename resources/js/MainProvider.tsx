@@ -1,25 +1,14 @@
 import {createContext, FC, ReactNode, useCallback, useEffect, useState} from 'react';
 import {UserApi} from "./api";
+import {IUser} from './types/UserTypes';
+import {ProviderProps} from "./types/ProviderTypes.tsx";
 
-export interface IUser {
-    id: number;
-    email: string;
-    name: string;
-    isSuperAdmin: boolean;
-    permissions: string[];
-    can: (p: string) => boolean;
-}
-
-interface IMainContext {
+type IMainContext = {
     user: IUser | null;
     setUser: (u: IUser | null) => void;
 }
 
 const MainContext = createContext<IMainContext | undefined>(undefined);
-
-type ProviderProps = {
-    children: ReactNode;
-}
 
 const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode => {
     const [ready, setReady] = useState<boolean>(false);
@@ -39,6 +28,11 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
             can: (perm: string) => (raw.isSuperAdmin ?? false) || (raw.permissions ?? []).includes(perm),
         });
     };
+
+
+    // console.log("OLD ROUTES", oldRroutes);
+    // console.log("NEW ROUTES", routes);
+
 
     const setBuildedUser = useCallback((u: IUser | null) => {
         setUser(!u ? u : buildUser(u as IUser));
@@ -63,7 +57,7 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
             .then((res: Partial<IUser>) => {
                 //setUser(res as IUser);
                 setUser(buildUser(res));
-                console.log("user authenticated:", res);
+                // console.log("user authenticated:", res);
             });
     }, []);
 
@@ -71,10 +65,10 @@ const MainProvider: FC<ProviderProps> = ({children}: ProviderProps): ReactNode =
     useEffect(() => {
         if (user) {
             sessionStorage.setItem('auth_user', JSON.stringify(user));
-            console.log("USER", user);
+            // console.log("USER", user);
         } else {
             sessionStorage.removeItem('auth_user');
-            console.log("USER");
+            // console.log("USER");
         }
     }, [user]);
 

@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
             FumettoSeeder::class,
         ]);
 
-        User::where('email', 'test@example.com')->first()->assignRole(RoleEnum::SUPER_ADMIN);
+        User::where('email', 'user@example.com')->first()->assignRole(RoleEnum::SUPER_ADMIN);
         User::where('email', 'admin@example.com')->first()->assignRole(RoleEnum::ADMIN);
-        User::where('email', 'test@example.com')->first()->assignRole(RoleEnum::EDITOR);
+        User::where('email', 'user@example.com')->first()->assignRole(RoleEnum::EDITOR);
     }
 }

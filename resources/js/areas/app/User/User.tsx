@@ -1,12 +1,7 @@
 import {FC, ReactNode, useEffect} from "react";
 import useAuth from "../../../hooks/useAuth.tsx";
 
-
-type UserProps = {
-    //user?: IUser,
-};
-
-const User: FC<UserProps> = ({}: UserProps): ReactNode => {
+const User: FC = (): ReactNode => {
     const {user} = useAuth();
 
     useEffect(() => {

@@ -2,8 +2,8 @@ import {ReactNode, useCallback, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import './Logout.css';
 import {UserApi} from "../../../api";
-import {routes} from "../../../hooks/useRoutes.ts";
 import useAuth from "../../../hooks/useAuth.tsx";
+import routes from "../../../routes.tsx";
 
 const Logout = (): ReactNode => {
 
@@ -11,7 +11,7 @@ const Logout = (): ReactNode => {
     const navigate = useNavigate();
 
     const redirectToHome = useCallback(() => {
-        navigate(routes.appRoot.path, {replace: true});
+        navigate(routes.app.index, {replace: true});
     }, [navigate]);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const Logout = (): ReactNode => {
                 setUser(null);
                 redirectToHome();
             });
-    }, []);
+    }, [redirectToHome, setUser, user]);
 
     return (<div className={"logout"}>... logout in corso ...</div>);
 };

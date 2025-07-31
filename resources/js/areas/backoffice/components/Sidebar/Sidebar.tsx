@@ -1,20 +1,20 @@
 import {ReactNode} from "react";
 import SidebarItem from "./SidebarItem.tsx";
-import {routes} from "../../../../hooks/useRoutes.ts";
+import routes from "../../../../routes.tsx";
 
 const Sidebar = (): ReactNode => {
 
     const navConfig = {
         home: {
-            path: routes.adminRoot.path,
+            path: routes.admin.index,
             label: "Home",
         },
         utenti: {
-            path: routes.adminUsers.path,
+            path: routes.admin.users,
             label: "Utenti",
         },
         fumetti: {
-            path: routes.adminFumetti.path,
+            path: routes.admin.fumetti,
             label: "Fumetti",
         }
     };
@@ -25,7 +25,7 @@ const Sidebar = (): ReactNode => {
                 <SidebarItem key={key} to={n.path}>
                     {n.label}
                 </SidebarItem>))}
-            <SidebarItem to={routes.appRoot.path}>
+            <SidebarItem to={routes.app.index}>
                 <span className="small">&lt; Torna al sito</span>
             </SidebarItem>
         </ul>

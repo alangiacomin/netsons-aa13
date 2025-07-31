@@ -3,13 +3,7 @@ import {FumettoApi} from "../../../api";
 import {faPen, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-
-export interface IFumetto {
-    Id: number;
-    Numero: number;
-    Titolo: string | undefined;
-    DataPubblicazione: string | undefined;
-}
+import {IFumetto} from "../../../types/FumettiTypes.tsx";
 
 const Fumetti = (): ReactNode => {
     const [fumetti, setFumetti] = useState<IFumetto[] | null>(null)

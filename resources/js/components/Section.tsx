@@ -1,17 +1,16 @@
 import {FC, ReactNode} from "react";
-import {useLocation} from "react-router-dom";
-import Login from "../areas/app/Login/Login.tsx";
 import useAuth from "../hooks/useAuth.tsx";
 
 type SectionProps = {
     id: string;
     children?: ReactNode;
+    fallbackLogin?: ReactNode;
+    fallbackUnauthorized?: ReactNode;
 }
 
-const Section: FC<SectionProps> = ({id, children}: SectionProps): ReactNode => {
+const Section: FC<SectionProps> = ({id, children, fallbackLogin, fallbackUnauthorized}: SectionProps): ReactNode => {
 
     const {user} = useAuth();
-    const location = useLocation();
 
     if (user && user.can('section-' + id)) {
         return (
@@ -24,13 +23,10 @@ const Section: FC<SectionProps> = ({id, children}: SectionProps): ReactNode => {
 
 
     if (!user) {
-        return <Login redirectTo={location.pathname}/>;
+        return (<>{fallbackLogin}</>);
     }
 
-    return (
-        <div>NON SEI AUTORIZZATO</div>
-    )
-
+    return (<>{fallbackUnauthorized}</>);
 }
 
 

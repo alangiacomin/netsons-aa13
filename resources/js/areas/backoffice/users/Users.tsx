@@ -1,13 +1,13 @@
 import {ReactNode, useCallback, useEffect, useState} from "react";
-import {IUser} from "../../../MainProvider.tsx";
 import {UserApi} from "../../../api";
 import {faPen, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import useAuth from "../../../hooks/useAuth.tsx";
+import {IUser} from "../../../types/UserTypes.tsx";
 
 const Users = (): ReactNode => {
-    const [users, setUsers] = useState<IUser[] | null>(null)
+    const [users, setUsers] = useState<Partial<IUser>[] | null>(null)
     const {user} = useAuth();
 
     const loadUsers = useCallback(() => {
@@ -81,7 +81,9 @@ const Users = (): ReactNode => {
                             <button className="btn btn-link btn-sm"><FontAwesomeIcon icon={faPen}/></button>
                             <button className="btn btn-link btn-sm" disabled={!user || user.id === u.id}
                                     onClick={() => {
-                                        deleteUser(u.id)
+                                        if (u.id) {
+                                            deleteUser(u.id)
+                                        }
                                     }}>
                                 <FontAwesomeIcon icon={faTrashCan}/></button>
                         </td>

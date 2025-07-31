@@ -7,8 +7,8 @@ import NavbarDropdownItem from "./NavbarDropdownItem.tsx";
 import NavbarDropdownDivider from "./NavbarDropdownDivider.tsx";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {routes} from "../../../../hooks/useRoutes.ts";
 import useAuth from "../../../../hooks/useAuth.tsx";
+import routes from "../../../../routes.tsx";
 
 const Navbar = (): ReactNode => {
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -19,15 +19,15 @@ const Navbar = (): ReactNode => {
 
     const navConfig = {
         home: {
-            path: routes.appRoot.path,
+            path: routes.app.index,
             label: "Home",
         },
         fumetti: {
-            path: routes.appFumetti.path,
+            path: routes.app.fumetti,
             label: "Fumetti",
         },
         fumetti2: {
-            path: routes.appFumetti2.path,
+            path: routes.app.fumetti2,
             label: "Fumetti2",
         }
     };
@@ -62,32 +62,30 @@ const Navbar = (): ReactNode => {
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {user && (
                             <>
-                                <NavbarItem to={routes.adminRoot.path}>Admin</NavbarItem>
-                                <NavbarItem to={routes.appLogout.path}>Logout</NavbarItem>
+                                <NavbarItem to={routes.admin.index}>Admin</NavbarItem>
+                                <NavbarItem to={routes.app.logout}>Logout</NavbarItem>
                             </>)}
                         {!user && (
                             <>
-                                <NavbarItem to={routes.appLogin.path}>Login</NavbarItem>
+                                <NavbarItem to={routes.app.login}>Login</NavbarItem>
                             </>)}
                         <span>___</span>
                         <NavbarDropdown label={(
-                            <span><FontAwesomeIcon icon={faUser}/> {user ? user.name : "User"} </span>)}>
+                            <span><FontAwesomeIcon icon={faUser}/> {user ? user.name : ""} </span>)}>
                             {user && (
                                 <>
                                     <NavbarDropdownItem
-                                        to={buildPath(routes.appUser.path, {id: user.id})}>User</NavbarDropdownItem>
+                                        to={buildPath(routes.app.user, {id: user.id})}>User</NavbarDropdownItem>
                                     <NavbarDropdownItem
-                                        to={buildPath(routes.appUser.path, {id: 2})}>User 2</NavbarDropdownItem>
-                                    <NavbarDropdownItem
-                                        to={routes.adminRoot.path}>Admin</NavbarDropdownItem>
+                                        to={buildPath(routes.app.user, {id: 2})}>User 2</NavbarDropdownItem>
                                     <NavbarDropdownDivider/>
-                                    <NavbarDropdownItem to={routes.appLogout.path}>Logout</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.app.logout}>Logout</NavbarDropdownItem>
                                 </>
                             )}
                             {!user && (
                                 <>
-                                    <NavbarDropdownItem to={routes.appLogin.path}>Login</NavbarDropdownItem>
-                                    <NavbarDropdownItem to={routes.appRegister.path}>Register</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.app.login}>Login</NavbarDropdownItem>
+                                    <NavbarDropdownItem to={routes.app.register}>Register</NavbarDropdownItem>
                                 </>
                             )}
                         </NavbarDropdown>

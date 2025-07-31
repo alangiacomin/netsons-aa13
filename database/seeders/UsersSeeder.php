@@ -27,9 +27,9 @@ class UsersSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'test@example.com'], // email unica
+            ['email' => 'user@example.com'], // email unica
             [
-                'name' => 'Tester',
+                'name' => 'User',
                 'password' => Hash::make('password123'), // scegli una password sicura
                 // 'is_admin' => true, // se hai questo campo per distinguere admin
             ]

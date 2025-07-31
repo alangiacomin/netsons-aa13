@@ -6,8 +6,8 @@ import {UserApi} from "../../../api";
 import classNames from "classnames";
 import FieldError from "./FieldError";
 import './Login.css';
-import {routes} from "../../../hooks/useRoutes.ts";
 import useAuth from "../../../hooks/useAuth.tsx";
+import routes from "../../../routes.tsx";
 
 type ErrorsType = {
     email?: string[],
@@ -29,7 +29,7 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
     const {user, setUser} = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: routes.appRoot.path};
+    const from = (location.state as { from?: Location })?.from || redirectTo || {pathname: routes.app.index};
 
     // Gestore generico per ambedue i campi
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -121,14 +121,14 @@ const Login: FC<LoginProps> = ({redirectTo}: LoginProps): ReactNode => {
                             type={"button"}
                             className={classNames("btn")}
                             onClick={() => {
-                                setCredenziali({...credenziali, email: "test@example.com", password: "password123"})
+                                setCredenziali({...credenziali, email: "user@example.com", password: "password123"})
                             }}>
-                            Tester
+                            User
                         </button>
                     </div>
                     <p className="mt-3 small text-center">
                         Nuovo su questo sito?{' '}
-                        <Link to={routes.appRegister.path} className="has-text-link">
+                        <Link to={routes.app.register} className="has-text-link">
                             Crea un account
                         </Link>
                     </p>
