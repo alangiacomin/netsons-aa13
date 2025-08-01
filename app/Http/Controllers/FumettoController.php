@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Fumetto\StoreFumettoRequest;
 use App\Http\Requests\Fumetto\UpdateFumettoRequest;
 use App\Http\Resources\FumettoResource;
+use App\Http\Resources\TexUfficialeResource;
 use App\Jobs\Fumetto\CreaFumetto;
 use App\Jobs\Fumetto\CreaFumettoRandom;
 use App\Models\Fumetto;
+use App\Services\TextScraper\TextScraperService;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,7 +37,7 @@ class FumettoController extends Controller
         //
         // CreaFumettoRandom::dispatch();
 
-        return FumettoResource::collection(Fumetto::all());
+        return FumettoResource::collection(Fumetto::all()->sortBy(['Numero', 'DataPubblicazione']));
     }
 
     /**
@@ -100,5 +102,30 @@ class FumettoController extends Controller
         $fumetto->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @apiResourceCollection App\Http\Resources\TexUfficialeResource
+     *
+     * @apiResourceModel \App\Models\Fumetto
+     */
+    public function getList()
+    {
+        $scraper = new TextScraperService();
+
+        $data = $scraper->fetch();
+
+        $presenti = Fumetto::all();
+
+        // Raccogli tutti i numeri già presenti
+        $numeriPresenti = $presenti->pluck('Numero')->toArray();
+        // print_r($numeriPresenti);
+
+        // Filtra i mancanti
+        $mancanti = array_filter($data, function ($albo) use ($numeriPresenti) {
+            return !in_array($albo->numero, $numeriPresenti);
+        });
+
+        return TexUfficialeResource::collection($mancanti);
     }
 }

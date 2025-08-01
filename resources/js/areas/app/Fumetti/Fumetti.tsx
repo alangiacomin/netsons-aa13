@@ -35,7 +35,7 @@ const Fumetti = () => {
                     <tr className={"text-center"}>
                         <td colSpan={4} className={"py-3"}>Trovato nulla</td>
                     </tr>)}
-                {fumetti && fumetti.map((f) => (
+                {fumetti && fumetti.map((f: IFumetto) => (
                     <tr key={f.Id}>
                         <th scope="row">{f.Id}</th>
                         <td>{f.Numero}</td>

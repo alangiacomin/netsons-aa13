@@ -7,6 +7,16 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FumettoApi {
     /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static getApiFumettiGetList(): CancelablePromise<Array<Record<string, any>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/fumetti/getList',
+        });
+    }
+    /**
      * List
      * Display a listing of the resource.
      * @returns any
@@ -32,12 +42,18 @@ export class FumettoApi {
              */
             Titolo: string;
             Numero: number;
+            /**
+             * Must be a valid date.
+             */
+            DataPubblicazione?: string;
+            DataEsatta?: boolean;
         },
     ): CancelablePromise<{
         Id?: number;
         Numero?: number;
         Titolo?: string;
         DataPubblicazione?: string;
+        DataEsatta?: boolean;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -60,6 +76,7 @@ export class FumettoApi {
         Numero?: number;
         Titolo?: string;
         DataPubblicazione?: string;
+        DataEsatta?: boolean;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -83,6 +100,7 @@ export class FumettoApi {
         Numero?: number;
         Titolo?: string;
         DataPubblicazione?: string;
+        DataEsatta?: boolean;
     }> {
         return __request(OpenAPI, {
             method: 'PUT',

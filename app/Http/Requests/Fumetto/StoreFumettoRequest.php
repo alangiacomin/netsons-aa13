@@ -25,6 +25,8 @@ class StoreFumettoRequest extends FormRequest
         return [
             'Titolo' => 'required|max:255',
             'Numero' => 'required|integer',
+            'DataPubblicazione' => 'date',
+            'DataEsatta' => 'boolean',
         ];
     }
 }

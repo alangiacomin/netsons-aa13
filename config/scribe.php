@@ -3,6 +3,7 @@
 use Knuckles\Scribe\Config\AuthIn;
 use Knuckles\Scribe\Config\Defaults;
 use Knuckles\Scribe\Extracting\Strategies;
+use Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls;
 
 use function Knuckles\Scribe\Config\configureStrategy;
 use function Knuckles\Scribe\Config\removeStrategies;
@@ -229,7 +230,13 @@ return [
         'bodyParameters' => [
             ...Defaults::BODY_PARAMETERS_STRATEGIES,
         ],
-        'responses' => configureStrategy(
+        'responses' => [
+            ...array_filter(
+                Defaults::RESPONSES_STRATEGIES,
+                fn ($strategy) => $strategy !== ResponseCalls::class,
+            ),
+        ],
+        'responses2' => configureStrategy(
             Defaults::RESPONSES_STRATEGIES,
             Strategies\Responses\ResponseCalls::withSettings(
                 only: ['GET *'],

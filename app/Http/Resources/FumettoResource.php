@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
  * @property int $Numero
  * @property string $Titolo
  * @property Carbon $DataPubblicazione
+ * @property bool $DataEsatta
  */
 class FumettoResource extends JsonResource
 {
@@ -19,7 +20,8 @@ class FumettoResource extends JsonResource
             'Id' => $this->id,
             'Numero' => $this->Numero,
             'Titolo' => $this->Titolo,
-            'DataPubblicazione' => $this->DataPubblicazione,
+            'DataPubblicazione' => $this->DataPubblicazione, // ->format('d/m/Y'),
+            'DataEsatta' => $this->DataEsatta,
         ];
     }
 }

@@ -13,9 +13,11 @@ class Fumetto extends Model
         'Titolo',
         'Numero',
         'DataPubblicazione',
+        'DataEsatta',
     ];
 
     protected $casts = [
         'DataPubblicazione' => 'datetime',
+        'DataEsatta' => 'boolean',
     ];
 }
