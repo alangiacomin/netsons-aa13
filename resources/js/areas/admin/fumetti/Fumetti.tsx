@@ -70,31 +70,39 @@ const Fumetti = (): ReactNode => {
             DataPubblicazione: getDateString(fumetto.Anno, fumetto.MesePubblicazione, 1),
             DataEsatta: false,
         }).then((res) => {
-                setFumetti((prev) => {
-                    return [...(prev ?? []), {
-                        Id: res.Id ?? 0,
-                        Numero: res.Numero ?? 0,
-                        Titolo: res.Titolo ?? '',
-                        DataPubblicazione: res.DataPubblicazione ?? '',
-                        DataEsatta: res.DataEsatta ?? false,
-                    }];
-                });
-                setMancanti((prev) => {
-                    return prev
-                        ? prev.filter((u) => u.Numero !== fumetto.Numero)
-                        : null;
-                });
+            setFumetti((prev) => {
+                return [...(prev ?? []), {
+                    Id: res.Id ?? 0,
+                    Numero: res.Numero ?? 0,
+                    Titolo: res.Titolo ?? '',
+                    DataPubblicazione: res.DataPubblicazione ?? '',
+                    DataEsatta: res.DataEsatta ?? false,
+                }];
+            });
+            setMancanti((prev) => {
+                return prev
+                    ? prev.filter((u) => u.Numero !== fumetto.Numero)
+                    : null;
+            });
         });
     }, [getDateString]);
 
     const addFumetti = useCallback(() => {
         if (selezionati.length > 0) {
-            selezionati.forEach(f => {
-                addFumetto(f, false);
-            });
+            FumettoApi.storeBulk({fumetti: selezionati})
+                .then((res) => {
+                    setFumetti((prev) => {
+                        return [...(prev ?? []), ...res];
+                    });
+                    setMancanti((prev) => {
+                        return prev
+                            ? prev.filter((u) => !res.some(r => Number(r.Numero) === Number(u.Numero)))
+                            : null;
+                    });
+                });
             setSelezionati([]);
         }
-    }, [addFumetto, selezionati]);
+    }, [selezionati]);
 
     return (
         <div className={"container"}>

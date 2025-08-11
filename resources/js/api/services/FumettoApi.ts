@@ -17,6 +17,38 @@ export class FumettoApi {
         });
     }
     /**
+     * Store bulk
+     * @param requestBody
+     * @returns any
+     * @throws ApiError
+     */
+    public static storeBulk(
+        requestBody: {
+            /**
+             * Must have at least 1 items.
+             */
+            fumetti: Array<{
+                /**
+                 * Must not be greater than 255 characters.
+                 */
+                Titolo: string;
+                Numero: number;
+                /**
+                 * Must be a valid date.
+                 */
+                DataPubblicazione?: string;
+                DataEsatta?: boolean;
+            }>;
+        },
+    ): CancelablePromise<Array<Record<string, any>>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/fumetti/bulk',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
      * List
      * Display a listing of the resource.
      * @returns any

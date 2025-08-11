@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Fumetto\StoreFumettiBulkRequest;
 use App\Http\Requests\Fumetto\StoreFumettoRequest;
 use App\Http\Requests\Fumetto\UpdateFumettoRequest;
 use App\Http\Resources\FumettoResource;
 use App\Http\Resources\TexUfficialeResource;
+use App\Jobs\Fumetto\BulkInsertFumetti;
 use App\Jobs\Fumetto\CreaFumetto;
 use App\Jobs\Fumetto\CreaFumettoRandom;
 use App\Models\Fumetto;
@@ -56,6 +58,24 @@ class FumettoController extends Controller
         $ret = CreaFumetto::execute([...$request->validated()]);
 
         return new FumettoResource($ret);
+    }
+
+    /**
+     * Store bulk
+     *
+     * @apiResourceCollection  App\Http\Resources\FumettoResource
+     *
+     * @apiResourceModel       App\Models\Fumetto
+     */
+    public function storeBulk(StoreFumettiBulkRequest $request)
+    {
+        $payload = $request->validated();
+        $fumetti = $payload['fumetti'];
+
+        // Manda il Job sulla coda (usa la connessione Redis configurata)
+        $bk = BulkInsertFumetti::execute($fumetti);
+
+        return FumettoResource::collection($bk);
     }
 
     /**
