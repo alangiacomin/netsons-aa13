@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
     Route::prefix('fumetti')->name('fumetti.')->group(function () {
-        Route::get('getList', [FumettoController::class, 'getList'])->name('getList');
+        Route::get('getListMancanti', [FumettoController::class, 'getListMancanti'])->name('getListMancanti');
     });
     Route::apiResource('fumetti', FumettoController::class)->parameters(
         [

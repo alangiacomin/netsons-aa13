@@ -6,7 +6,7 @@
     "dev": "vite",
     "dev:debug": "vite --debug hmr",
     "spec:gen": "php artisan scribe:generate",
-    "client:gen": "bunx openapi-typescript-codegen --input .openapi/openapi.yaml --output resources/js/api --postfixServices Api --client axios",
+    "client:gen": "npx openapi-typescript-codegen --input .openapi/openapi.yaml --output resources/js/api --postfixServices Api --client axios",
     "openapi:gen": "bun run spec:gen && bun run client:gen"
   },
   "devDependencies": {

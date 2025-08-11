@@ -109,7 +109,7 @@ class FumettoController extends Controller
      *
      * @apiResourceModel \App\Models\Fumetto
      */
-    public function getList()
+    public function getListMancanti()
     {
         $scraper = new TextScraperService();
 

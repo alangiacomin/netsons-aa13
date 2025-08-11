@@ -10,10 +10,10 @@ export class FumettoApi {
      * @returns any
      * @throws ApiError
      */
-    public static getApiFumettiGetList(): CancelablePromise<Array<Record<string, any>>> {
+    public static getApiFumettiGetListMancanti(): CancelablePromise<Array<Record<string, any>>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/fumetti/getList',
+            url: '/api/fumetti/getListMancanti',
         });
     }
     /**

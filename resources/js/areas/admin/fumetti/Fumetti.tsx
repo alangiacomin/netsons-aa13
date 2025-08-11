@@ -22,7 +22,7 @@ const Fumetti = (): ReactNode => {
                 DataEsatta: u.DataEsatta,
             })));
         });
-        FumettoApi.getApiFumettiGetList().then((res) => {
+        FumettoApi.getApiFumettiGetListMancanti().then((res) => {
             setMancanti(res.map((u) => ({
                 Numero: u.Numero,
                 Titolo: u.Titolo,
