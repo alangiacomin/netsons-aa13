@@ -10,7 +10,6 @@ const Fumetti = () => {
             .then((res) => {
                 console.log(res);
                 setFumetti(res as IFumetto[]);
-
             });
     }, []);
 
@@ -20,7 +19,6 @@ const Fumetti = () => {
             <table className="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Numero</th>
                     <th scope="col">Titolo</th>
                     <th scope="col">Data</th>
@@ -29,18 +27,27 @@ const Fumetti = () => {
                 <tbody className={"table-group-divider"}>
                 {!fumetti && (
                     <tr className={"text-center"}>
-                        <td colSpan={4} className={"py-3"}>... loading ...</td>
+                        <td colSpan={3} className={"py-3"}>... loading ...</td>
                     </tr>)}
                 {fumetti && fumetti.length == 0 && (
                     <tr className={"text-center"}>
-                        <td colSpan={4} className={"py-3"}>Trovato nulla</td>
+                        <td colSpan={3} className={"py-3"}>Trovato nulla</td>
                     </tr>)}
                 {fumetti && fumetti.map((f: IFumetto) => (
                     <tr key={f.Id}>
-                        <th scope="row">{f.Id}</th>
-                        <td>{f.Numero}</td>
+                        <th scope="row">{f.Numero}</th>
                         <td>{f.Titolo}</td>
-                        <td>{f.DataPubblicazione}</td>
+                        <td>{new Date(f.DataPubblicazione ?? 0).toLocaleDateString('it-IT',
+                            f.DataEsatta
+                                ? {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                }
+                                : {
+                                    month: 'long',
+                                    year: 'numeric'
+                                })}</td>
                     </tr>))}
                 </tbody>
             </table>

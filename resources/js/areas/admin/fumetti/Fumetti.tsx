@@ -7,8 +7,9 @@ import {IFumetto, ITexUfficiale} from "../../../types/FumettiTypes.tsx";
 import useDate from "../../../hooks/useDate.ts";
 
 const Fumetti = (): ReactNode => {
-    const [fumetti, setFumetti] = useState<IFumetto[]>([]);
+    const [fumetti, setFumetti] = useState<IFumetto[] | null>(null);
     const [mancanti, setMancanti] = useState<ITexUfficiale[] | null>(null);
+    const [selezionati, setSelezionati] = useState<ITexUfficiale[]>([]);
 
     const {getDateString} = useDate();
 
@@ -69,22 +70,31 @@ const Fumetti = (): ReactNode => {
             DataPubblicazione: getDateString(fumetto.Anno, fumetto.MesePubblicazione, 1),
             DataEsatta: false,
         }).then((res) => {
-            setFumetti((prev) => {
-                return [...prev, {
-                    Id: res.Id ?? 0,
-                    Numero: res.Numero ?? 0,
-                    Titolo: res.Titolo ?? '',
-                    DataPubblicazione: res.DataPubblicazione ?? '',
-                    DataEsatta: res.DataEsatta ?? false,
-                }];
-            });
-            setMancanti((prev) => {
-                return prev
-                    ? prev.filter((u) => u.Numero !== fumetto.Numero)
-                    : null;
-            });
+                setFumetti((prev) => {
+                    return [...(prev ?? []), {
+                        Id: res.Id ?? 0,
+                        Numero: res.Numero ?? 0,
+                        Titolo: res.Titolo ?? '',
+                        DataPubblicazione: res.DataPubblicazione ?? '',
+                        DataEsatta: res.DataEsatta ?? false,
+                    }];
+                });
+                setMancanti((prev) => {
+                    return prev
+                        ? prev.filter((u) => u.Numero !== fumetto.Numero)
+                        : null;
+                });
         });
     }, [getDateString]);
+
+    const addFumetti = useCallback(() => {
+        if (selezionati.length > 0) {
+            selezionati.forEach(f => {
+                addFumetto(f, false);
+            });
+            setSelezionati([]);
+        }
+    }, [addFumetto, selezionati]);
 
     return (
         <div className={"container"}>
@@ -98,7 +108,6 @@ const Fumetti = (): ReactNode => {
             <table className="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Numero</th>
                     <th scope="col">Titolo</th>
                     <th scope="col">Data pubblicazione</th>
@@ -108,16 +117,15 @@ const Fumetti = (): ReactNode => {
                 <tbody className={"table-group-divider"}>
                 {!fumetti && (
                     <tr className={"text-center"}>
-                        <td colSpan={5} className={"py-3"}>... loading ...</td>
+                        <td colSpan={4} className={"py-3"}>... loading ...</td>
                     </tr>)}
                 {fumetti && fumetti.length == 0 && (
                     <tr className={"text-center"}>
-                        <td colSpan={5} className={"py-3"}>Trovato nulla</td>
+                        <td colSpan={4} className={"py-3"}>Trovato nulla</td>
                     </tr>)}
                 {fumetti && fumetti.map((u) => (
-                    <tr key={u.Id}>
-                        <th scope="row">{u.Id}</th>
-                        <td>{u.Numero}</td>
+                    <tr key={u.Numero}>
+                        <th scope="row">{u.Numero}</th>
                         <td>{u.Titolo}</td>
                         <td>
                             {u.DataEsatta
@@ -144,41 +152,82 @@ const Fumetti = (): ReactNode => {
                 </tbody>
             </table>
             <h2>Mancanti</h2>
-            <table className="table">
-                <thead>
-                <tr>
-                    <th scope="col">Numero</th>
-                    <th scope="col">Titolo</th>
-                    <th scope="col">Pubblicazione</th>
-                    <th/>
-                </tr>
-                </thead>
-                <tbody className={"table-group-divider"}>
-                {!mancanti && (
-                    <tr className={"text-center"}>
-                        <td colSpan={5} className={"py-3"}>... loading ...</td>
-                    </tr>)}
-                {mancanti && mancanti.length == 0 && (
-                    <tr className={"text-center"}>
-                        <td colSpan={5} className={"py-3"}>Trovato nulla</td>
-                    </tr>)}
-                {mancanti && mancanti.map((u) => (
-                    <tr key={u.Numero}>
-                        <td>{u.Numero}</td>
-                        <td>{u.Titolo}</td>
-                        <td>{u.MesePubblicazione} {u.Anno}</td>
-                        <td>
-                            <button className="btn btn-link btn-sm"
-                                    onClick={() => {
-                                        addFumetto(u)
-                                    }}>
-                                Aggiungi
-                            </button>
-                        </td>
-                    </tr>))}
-                </tbody>
-            </table>
-        </div>);
+            <button className="btn btn-link btn-sm"
+                    type="button"
+                    onClick={() => {
+                        addFumetti();
+                    }}
+                    disabled={selezionati.length == 0}
+            >
+                Aggiungi selezionati
+            </button>
+            <form>
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                checked={mancanti?.length === selezionati.length && mancanti?.length > 0}
+                                onChange={(e) => {
+                                    if ((e.target as HTMLInputElement).checked) {
+                                        setSelezionati(mancanti ?? []);
+                                    } else {
+                                        setSelezionati([]);
+                                    }
+                                }}
+                            />
+                        </th>
+                        <th scope="col">Numero</th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Pubblicazione</th>
+                        <th/>
+                    </tr>
+                    </thead>
+                    <tbody className={"table-group-divider"}>
+                    {!mancanti && (
+                        <tr className={"text-center"}>
+                            <td colSpan={5} className={"py-3"}>... loading ...</td>
+                        </tr>)}
+                    {mancanti && mancanti.length == 0 && (
+                        <tr className={"text-center"}>
+                            <td colSpan={5} className={"py-3"}>Trovato nulla</td>
+                        </tr>)}
+                    {mancanti && mancanti.map((u) => (
+                        <tr key={u.Numero}>
+                            <td>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    checked={selezionati.some(item => item.Numero === u.Numero)}
+                                    onChange={(e) => {
+                                        if ((e.target as HTMLInputElement).checked) {
+                                            setSelezionati((prev) => [...prev, u]);
+                                        } else {
+                                            setSelezionati((prev) => prev.filter(item => item.Numero !== u.Numero));
+                                        }
+                                    }}
+                                />
+                            </td>
+                            <td>{u.Numero}</td>
+                            <td>{u.Titolo}</td>
+                            <td>{u.MesePubblicazione} {u.Anno}</td>
+                            <td>
+                                <button className="btn btn-link btn-sm"
+                                        type="button"
+                                        onClick={() => {
+                                            addFumetto(u)
+                                        }}>
+                                    Aggiungi
+                                </button>
+                            </td>
+                        </tr>))}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    );
 };
 
 export default Fumetti;
